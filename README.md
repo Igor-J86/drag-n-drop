@@ -57,7 +57,8 @@ export default SomeComponent
 ```
 
 The component will consume the props you pass on the surrounding divs (or other elements), and render the children by determining whether they should be displayed, are accessible, in which order, how many columns they will take up etc.
-If you customize the visibility, sort order or columns, this information is then stored in local storage, and retrieved from there next time as well.
+
+If you customize the visibility, sort order or columns, the information is being stored in local storage, and will be used by the component to render the children the same way next time you visit the same page.
 
 ## Optional props
 | Prop                          | Default             |
