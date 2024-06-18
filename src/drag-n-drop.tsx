@@ -44,7 +44,6 @@ type TileObj = {
 export const DragNDrop: React.FC<DragNDropProps> = ({
   id = "customizableTiles",
   children,
-  isSuperUser,
   apiEndpoint,
   showNonAccessible,
   rootClassName = "ijrc-dragndrop-area",
