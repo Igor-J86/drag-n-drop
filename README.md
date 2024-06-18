@@ -69,11 +69,11 @@ If you customize the visibility, sort order or columns, the information is being
 | rootClassName:string          | 'ijrc-dragndrop'    |
 | language:string               | 'en'                |
 
-## Developed with
-- React
-- TypeScript
-- Vite
-- PostCSS
+## Tech stack
+😱 React
+🦺 TypeScript
+🛠️ Vite
+🪄 PostCSS
 
 ## License
 Distributed under the ISC License.
