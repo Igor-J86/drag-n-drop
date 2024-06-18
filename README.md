@@ -4,7 +4,6 @@ A data driven drag-n-drop component, written in React with TypeScript.
 ## Usage
 ```jsx
 import React from "react";
-import { Link } from "react-router-dom";
 import { DragNDrop } from "@igor-j86/drag-n-drop";
 
 const SomeComponent = () => {
