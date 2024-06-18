@@ -70,10 +70,10 @@ If you customize the visibility, sort order or columns, the information is being
 | language:string               | 'en'                |
 
 ## Tech stack
-😱 React
-🦺 TypeScript
-🛠️ Vite
-🪄 PostCSS
+- 😱 React
+- 🦺 TypeScript
+- 🛠️ Vite
+- 🪄 PostCSS
 
 ## License
 Distributed under the ISC License.
