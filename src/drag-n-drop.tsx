@@ -4,6 +4,7 @@ import Tile from "./Tile";
 import DeactivatedTiles from "./DeactivatedTiles";
 import { translations } from "./translations";
 import DefineLayout from "./DefineLayout";
+import { Cog, Info } from "./icons";
 
 export type TileProps = {
   tileId: string;
@@ -11,7 +12,6 @@ export type TileProps = {
   sortOrder: number;
   isAvailable?: boolean;
   hasAccess?: boolean;
-  reqSpecificAccess?: boolean;
   isDisplayed?: boolean;
   children: React.ReactElement;
   columns: number;
@@ -46,8 +46,8 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
   children,
   isSuperUser,
   apiEndpoint,
-  showNonAccessible = false,
-  rootClassName = "ijrc-dragndrop",
+  showNonAccessible,
+  rootClassName = "ijrc-dragndrop-area",
   language = "en"
 }) => {
   const [allTiles, setAllTiles] = React.useState<Array<any>>(children!);
@@ -68,7 +68,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     const tilesCollection: Array<TileObj> = [];
 
     tiles.map((tile) => {
-      if ((isSuperUser && !tile.reqSpecificAccess) || tile.hasAccess) {
+      if (tile.hasAccess) {
         const tilesObj: TileObj = {
           tileId: tile.tileId,
           sortOrder: tile.sortOrder,
@@ -102,16 +102,14 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
 
     tiles.map((tile) => {
       if (
-        (tile.reqSpecificAccess && tile.hasAccess) ||
-        (isSuperUser && !tile.reqSpecificAccess) ||
-        (!isSuperUser && !tile.reqSpecificAccess && tile.hasAccess)
+        (tile.hasAccess)
       ) {
         if (tile.isDisplayed && tile.isAvailable) {
           accessible.push(tile);
         } else {
           hiddenTiles.push(tile);
         }
-      } else if (!tile.reqSpecificAccess) {
+      } else {
         notAccessible.push(tile);
       }
     });
@@ -319,11 +317,11 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
   }, [layout, allTiles]);
 
   return (
-    <>
+    <div className="ijrc-dragndrop">
       {configuringTiles &&
         (allTiles.length > 0 ? (
           <p className="flex gaxs align-ic text-note">
-            {/* <Mybicon name="mybicon-info" className="icon-ui" /> */}
+            <Info size={18} />
             {t.customizeInfo}
           </p>
         ) : (
@@ -369,11 +367,10 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
       {/* Editing area with lists */}
       {configuringTiles ? (
         <>
-          <div className="bg-gray2 flex flex-wrap gal pam mvm">
+          <div className="bg-gray2 flex flex-wrap gal pam">
             <DeactivatedTiles
               hiddenTiles={hiddenTiles}
               noAccessList={noAccessTo}
-              isSuperUser={isSuperUser}
               onChangeDisplay={handleDisplayChange}
               showNonAccessible={showNonAccessible}
               t={t}
@@ -387,11 +384,11 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
           <button
             aria-expanded="true"
             aria-controls={id}
-            className="btn-link--dark"
+            className="btn gaxs"
             type="button"
             onClick={() => setConfiguringTiles(!configuringTiles)}
           >
-            {/* <Mybicon name="mybicon-edit" className="icon-ui mrxs flex-none" /> */}
+            <Cog />
             {t.close}
           </button>
         </>
@@ -399,16 +396,16 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
         <button
           aria-expanded="false"
           aria-controls={id}
-          className="btn-link--dark reveal-slide"
+          className="btn reveal-slide"
           type="button"
           onClick={() => setConfiguringTiles(!configuringTiles)}
         >
-          {/* <Mybicon name="mybicon-edit" className="icon-ui flex-none" /> */}
+          <Cog />
           <span className="reveal-hover" tabIndex={-1}>
             {t.configure}
           </span>
         </button>
       )}
-    </>
+    </div>
   );
 };

@@ -6,51 +6,45 @@ const root = createRoot(document.getElementById('ijrc-dnd-root')!);
 
 // Example data
 const data = {
-  tracking: {
-    tileId: 'entrance_tracking',
+  entry1: {
+    tileId: 'entry1',
     sortOrder: 1,
-    name: "Tracking",
-    icon: 'mybicon-search',
+    name: "Entry 1 name",
     isAvailable: true,
     hasAccess: true,
-    reqSpecificAccess: false,
     isDisplayed: true,
     columns: 2,
   },
-  reports: {
-    tileId: 'entrance_reports',
+  entry2: {
+    tileId: 'entry2',
     sortOrder: 2,
-    name: "Operational messages",
-    icon: 'mybicon-chart-bar',
+    name: "Entry 2 name",
     isAvailable: true,
     hasAccess: true,
-    reqSpecificAccess: false,
     isDisplayed: true,
     columns: 3,
   },
-  checkout:{
-    tileId: 'entrance_checkout',
+  entry3:{
+    tileId: 'entry3',
     sortOrder: 3,
-    name: "Checkout",
-    icon: 'mybicon-cart',
+    name: "Entry 3 name",
     isAvailable: true,
-    hasAccess: true,
-    reqSpecificAccess: false,
-    isDisplayed: false,
+    hasAccess: false,
+    isDisplayed: true,
     columns: 2,
   },
 }
 
 root.render(
   <DragNDrop>
-    <div {...data.tracking}>
-      Tracking
+    <div {...data.entry1}>
+      {data.entry1.name}
     </div>
-    <div {...data.reports}>
-      Reports
+    <div {...data.entry2}>
+      {data.entry2.name}
     </div>
-    <div {...data.checkout}>
-      Checkout
+    <div {...data.entry3}>
+      {data.entry3.name}
     </div>
   </DragNDrop>
 );

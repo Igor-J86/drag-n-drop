@@ -15,7 +15,7 @@ const DefineLayout: React.FC<SetLayout> = ({
   const t = translations[language] ?? translations["nb"];
   return (
     <div className="maxw20r w100p">
-      <h3 className="mb0">{t.layoutHeading}</h3>
+      <h3>{t.layoutHeading}</h3>
       <p>{t.layoutInfo}</p>
       <label className="form__label" htmlFor="layoutColumns">
         {t.columnsLabel}

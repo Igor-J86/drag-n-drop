@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Translations } from "./translations";
+import { Eye } from "./icons";
 
 type Props = {
   tileName: string;
@@ -28,11 +29,11 @@ const DeactivatedTile: React.FC<Props> = ({
       <div className="flex align-ic gas maxs">{tileName}</div>
       {!disabled && (
         <button
-          className="btn-link--dark maxs"
+          className="btn"
           onClick={handleDisplayChange}
           title={`${t.show} ${tileName}`}
         >
-          {t.show}
+          <Eye />
         </button>
       )}
     </li>

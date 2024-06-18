@@ -8,14 +8,12 @@ type Tile = {
   name?: string;
   isAvailable?: boolean;
   hasAccess?: boolean;
-  reqSpecificAccess?: boolean;
   isDisplayed?: boolean;
 };
 
 type Props = {
   hiddenTiles: Array<Tile>;
   noAccessList: Array<Tile>;
-  isSuperUser?: boolean;
   onChangeDisplay?: React.FC | Function;
   showNonAccessible: boolean;
   t: Translations;
@@ -24,7 +22,6 @@ type Props = {
 const DeactivatedTiles: React.FC<Props> = ({
   hiddenTiles,
   noAccessList,
-  isSuperUser,
   onChangeDisplay,
   showNonAccessible,
   t,
@@ -36,7 +33,7 @@ const DeactivatedTiles: React.FC<Props> = ({
   return (
     <>
       <div className="maxw24r w100p">
-        <h3 className="text-1.25r mb0">{t.hiddenTilesHeading}</h3>
+        <h3>{t.hiddenTilesHeading}</h3>
         <p>{t.hiddenTilesInfo}</p>
         <ul className="owlxs">
           {hiddenTiles.map(
@@ -54,9 +51,9 @@ const DeactivatedTiles: React.FC<Props> = ({
         </ul>
       </div>
 
-      {!isSuperUser && noAccessList.length > 0 && showNonAccessible ? (
+      {noAccessList.length > 0 && showNonAccessible ? (
         <div className="maxw20r w100p">
-          <h3 className="text-1.25r mb0">{t.noAccessHeading}</h3>
+          <h3>{t.noAccessHeading}</h3>
           <p>{t.noAccessInfo}</p>
           <ul className="owlxs">
             {noAccessList.map(

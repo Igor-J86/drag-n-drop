@@ -1,5 +1,5 @@
 import * as React from "react";
-// import { Mybicon } from "@norwaypost/mybring-iconsystem";
+import { ArrowLeft, ArrowRight, Cross } from "./icons";
 import { Translations } from "./translations";
 import { TileProps } from "./drag-n-drop";
 
@@ -136,34 +136,28 @@ const Tile: React.FC<Props> = ({
       >
         {counter! > 1 && (
           <button
-            className="btn-link--dark paxs"
+            className="btn"
             data-sort-order={sortOrder}
             onClick={moveLeft}
             title={`${t.move} ${name} ${t.toLeft}`}
           >
-            {/* <Mybicon
-              name="mybicon-arrow-left"
-              className="icon-ui pointev-none"
-            /> */}
+            <ArrowLeft />
           </button>
         )}
         {counter! < length! && (
           <button
-            className="btn-link--dark paxs"
+            className="btn"
             data-sort-order={sortOrder}
             onClick={(e) => moveRight(e)}
             title={`${t.move} ${name} ${t.toRight}`}
           >
-            {/* <Mybicon
-              name="mybicon-arrow-right"
-              className="icon-ui pointev-none"
-            /> */}
+            <ArrowRight />
           </button>
         )}
       </div>
-      <div className="flex gas absolute display-change">
+      <div className={`flex gas absolute display-change${isDragging ? " pointev-none" : ""}`}>
         <button
-          className="btn-link--dark paxs h100p set-column"
+          className="btn set-column"
           onMouseLeave={() => setGridColumns(columns)}
           onKeyUp={(e) => handleKeyUp(e)}
           title={`${gridColumns} ${gridColumns > 1 ? t.columns : t.column}`}
@@ -179,11 +173,11 @@ const Tile: React.FC<Props> = ({
           ))}
         </button>
         <button
-          className={`btn-link--dark paxs ma0${isDragging ? " pointev-none" : ""}`}
+          className="btn"
           onClick={handleHideTile}
           title={`${t.hide} ${name}`}
         >
-          {/* <Mybicon name="mybicon-cross" className="icon-ui ma0 pointev-none" /> */}
+          <Cross />
         </button>
       </div>
       <div className="pointev-none">{tile.children}</div>

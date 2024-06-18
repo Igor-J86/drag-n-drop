@@ -7,6 +7,9 @@ export default defineConfig({
     assetsDir: ".",
     emptyOutDir: false,
     rollupOptions: {
+      input: {
+        "ijrc-dnd": "style/ijrc-dnd.css"
+      },
       output: {
         assetFileNames: 'ijrc-dnd[extname]'
       }
