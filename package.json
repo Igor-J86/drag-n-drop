@@ -1,7 +1,7 @@
 {
   "name": "@igor-j86/drag-n-drop",
   "version": "0.0.1",
-  "description": "A data driven drag-n-drop component for React",
+  "description": "A data driven drag-n-drop React component",
   "keywords": [
     "react",
     "frontend",
