@@ -1,0 +1,63 @@
+{
+  "name": "@igor-j86/drag-n-drop",
+  "version": "0.0.1",
+  "description": "A data driven drag-n-drop component for React",
+  "keywords": [
+    "react",
+    "frontend",
+    "drag-n-drop",
+    "component"
+  ],
+  "module": "./lib/esm/index.js",
+  "main": "./lib/cjs/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf lib && rimraf static",
+    "build": "vite build",
+    "copy-files": "copyfiles -e src/**/*.ts -e src/**/*.tsx -u 1 static/**/*.css lib/style",
+    "tsc": "npm run clean && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && npm run build && npm run copy-files",
+    "prepare": "npm run tsc",
+    "start": "vite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Igor-J86/drag-n-drop.git"
+  },
+  "author": "Igor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Igor-J86/drag-n-drop/issues"
+  },
+  "homepage": "https://github.com/Igor-J86/drag-n-drop#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest",
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/npm": "^11.0.2",
+    "@types/react": "^18.2.48",
+    "@vitejs/plugin-react": "^4.2.1",
+    "copyfiles": "^2.4.1",
+    "cssnano": "^6.0.3",
+    "postcss": "^8.4.33",
+    "postcss-nesting": "^12.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^5.0.5",
+    "semantic-release": "^23.0.0",
+    "typescript": "^5.0.4",
+    "vite": "^5.0.11"
+  }
+}

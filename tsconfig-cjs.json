@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib/cjs",
+    "allowJs": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "declaration": true,
+    "typeRoots": [
+      "index.d.ts",
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "src",
+    "src/**/*.css"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
