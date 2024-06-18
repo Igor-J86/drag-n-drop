@@ -57,13 +57,13 @@ export default SomeComponent
 ```
 
 The component will consume the props you pass on the surrounding divs (or other elements), and render the children by determining whether they should be displayed, are accessible, in which order, how many columns they will take up etc.
+If you customize the visibility, sort order or columns, this information is then stored in local storage, and retrieved from there next time as well.
 
 ## Optional props
 | Prop                          | Default             |
 | ----------------------------- | ------------------- |
 | id:string                     | 'customizableTiles' |
 | children:any                  | ''                  |
-| apiEndpoint:string            | ''                  |
 | showNonAccessible:boolean     | false               |
 | rootClassName:string          | 'ijrc-dragndrop'    |
 | language:string               | 'en'                |

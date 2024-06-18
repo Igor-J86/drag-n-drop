@@ -24,8 +24,6 @@ export interface DragNDropProps {
   children?: any;
   /** Is super user */
   isSuperUser?: boolean;
-  /** For getting and setting tiles via API */
-  apiEndpoint?: string;
   /** Show non-accessible elements */
   showNonAccessible?: boolean;
   /** Root class name */
@@ -44,7 +42,6 @@ type TileObj = {
 export const DragNDrop: React.FC<DragNDropProps> = ({
   id = "customizableTiles",
   children,
-  apiEndpoint,
   showNonAccessible,
   rootClassName = "ijrc-dragndrop-area",
   language = "en"
@@ -93,7 +90,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     // Push tiles with access to be displayed to one list,
     // tiles with access to not be displayed to another,
     // tiles without regular access to a third
-    // and leave out tiles that lack specific access
+    // and leave out tiles that should not be available at all
     const tiles = [...tilesData];
     let notAccessible: Array<TileProps> = [];
     let accessible: Array<TileProps> = [];
@@ -130,7 +127,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
 
   React.useEffect(() => {
     setIsLoading(true);
-    // Get stored tiles data from local storage. Could also come from an API.
+    // Get stored tiles data from local storage. Could also come from an API?
     const localData = JSON.parse(localStorage.getItem("mybr-tiles")!);
 
     if (localData && localData.length > 0) {
