@@ -8,10 +8,10 @@ export default defineConfig({
     emptyOutDir: false,
     rollupOptions: {
       input: {
-        "ijrc-dnd": "style/ijrc-dnd.css"
+        "ijdnd": "style/ijdnd.css"
       },
       output: {
-        assetFileNames: 'ijrc-dnd[extname]'
+        assetFileNames: 'ijdnd[extname]'
       }
     }
   },

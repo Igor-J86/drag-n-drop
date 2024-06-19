@@ -1,5 +1,5 @@
 import * as React from "react";
-import '../style/ijrc-dnd.css';
+import '../style/ijdnd.css';
 import Tile from "./Tile";
 import DeactivatedTiles from "./DeactivatedTiles";
 import { translations } from "./translations";
@@ -43,7 +43,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
   id = "customizableTiles",
   children,
   showNonAccessible,
-  rootClassName = "ijrc-dragndrop-area",
+  rootClassName = "ijdnd-area",
   language = "en"
 }) => {
   const [allTiles, setAllTiles] = React.useState<Array<any>>(children!);
@@ -313,7 +313,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
   }, [layout, allTiles]);
 
   return (
-    <div className="ijrc-dragndrop">
+    <div className="ijdnd">
       {configuringTiles &&
         (allTiles.length > 0 ? (
           <p className="flex gaxs align-ic text-note">

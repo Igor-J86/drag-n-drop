@@ -66,7 +66,7 @@ export default SomeComponent
 | id:string                     | 'customizableTiles' |
 | children:any                  | ''                  |
 | showNonAccessible:boolean     | false               |
-| rootClassName:string          | 'ijrc-dragndrop'    |
+| rootClassName:string          | 'ijdnd-area'    |
 | language:string               | 'en'                |
 
 ## Language

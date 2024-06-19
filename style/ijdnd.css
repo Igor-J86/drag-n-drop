@@ -1,14 +1,16 @@
 :root {
-  --green-dark: hsl(155, 100%, 15%);
-  --green-light: hsl(75, 53%, 70.5%);
-  --green: hsl(155, 100%, 19.6%);
-  --lighter-gray: hsl(0, 0%, 95%);
-  --light-gray: hsl(0, 0%, 92%);
-  --darker-gray: hsl(0, 0%, 70%);
-  --white: hsl(0, 0%, 100%);
+  --ijdnd-primary: hsl(155, 100%, 19.6%);
+  --ijdnd-primary-light: hsl(75, 53%, 70.5%);
+  --ijdnd-primary-dark: hsl(155, 100%, 15%);
+  --ijdnd-secondary: hsl(0, 0%, 85%);
+  --ijdnd-secondary-light: hsl(0, 0%, 92%);
+  --ijdnd-secondary-lighter: hsl(0, 0%, 95%);
+  --ijdnd-secondary-dark: hsl(0, 0%, 70%);
+  --ijdnd-light: hsl(0, 0%, 100%);
+  --ijdnd-dark: hsl(0, 0%, 15%);
 }
 
-.ijrc-dragndrop {
+.ijdnd {
   color: hsl(0, 0%, 20%);
   width: 100%;
   display: flex;
@@ -23,9 +25,9 @@
 
   select,
   input[type="text"] {
-    background-color: var(--white);
+    background-color: var(--ijdnd-white);
     border-radius: 3px;
-    border: 1px solid var(--darker-gray);
+    border: 1px solid var(--ijdnd-secondary-dark);
     padding: 0.25rem 0.5rem;
     height: 2rem;
   }
@@ -34,13 +36,13 @@
     fill: currentColor;
   }
 
-  .ijrc-dragndrop-area {
+  .ijdnd-area {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(calc(100% / 4 - 1rem), 1fr));
   
     .tile__config {
       padding: 3rem 0.5rem 0.5rem;
-      border: 2px dashed var(--green-dark);
+      border: 2px dashed var(--ijdnd-primary-dark);
       border-radius: 2px;
       cursor: grab;
       /* height: max-content; */
@@ -62,7 +64,7 @@
   
       span.active,
       span:hover {
-        background-color: var(--green-light);
+        background-color: var(--ijdnd-primary-light);
       }
     }
   
@@ -85,9 +87,9 @@
     }
   
     .box-dragging {
-      background-color: var(--green-light);
+      background-color: var(--ijdnd-primary-light);
       transition: background-color 0.2s ease-out;
-      border: 2px dashed var(--green);
+      border: 2px dashed var(--ijdnd-primary);
     }
   
     }
@@ -98,16 +100,21 @@
   }
 
   .btn {
-    background-color: var(--light-gray);
+    background-color: var(--ijdnd-secondary-light);
     display: flex;
     max-width: max-content;
+    min-width: max-content;
     align-items: center;
     margin: 0;
     padding: 0.25rem 0.5rem;
-    border: 1px solid var(--darker-gray);
+    border: none;
     border-radius: 3px;
     height: 2rem;
     color: inherit;
+
+    &:hover {
+      background-color: var(--ijdnd-secondary);
+    }
   }
   
   /* Utility classes */
@@ -187,10 +194,10 @@
   }
   
   .bg-white {
-    background-color: var(--white);
+    background-color: var(--ijdnd-white);
   }
-  .bg-gray2 {
-    background-color: var(--lighter-gray);
+  .bg2 {
+    background-color: var(--ijdnd-secondary-lighter);
   }
   
   .align-ic {
@@ -228,7 +235,7 @@
 }
 
 @media only screen and (min-width: 48em) {
-  .ijrc-dragndrop {
+  .ijdnd {
     .reveal-slide .reveal-hover {
       max-width: 0;
       transition: max-width 0.15s ease-out;
@@ -255,8 +262,8 @@
 }
 
 @media (max-width: 44rem) {
-  .ijrc-dragndrop {
-    .ijrc-dragndrop-area {
+  .ijdnd {
+    .ijdnd-area {
       grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)) !important;
     }
 

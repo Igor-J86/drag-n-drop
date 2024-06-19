@@ -2,7 +2,7 @@ import React from "react";
 import {createRoot} from 'react-dom/client';
 import { DragNDrop } from "../src/drag-n-drop";
 
-const root = createRoot(document.getElementById('ijrc-dnd-root')!);
+const root = createRoot(document.getElementById('ijdnd-root')!);
 
 // Example data
 const data = {
