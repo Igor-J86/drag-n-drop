@@ -1,3 +1,11 @@
+## [1.0.2](https://github.com/Igor-J86/drag-n-drop/compare/v1.0.1...v1.0.2) (2024-06-19)
+
+
+### Bug Fixes
+
+* add dark mode support ([e2e89c2](https://github.com/Igor-J86/drag-n-drop/commit/e2e89c2ffc1b4c7e8ab9918aded4861de0d45ab6))
+* rename abbreviation and custom properties ([e652941](https://github.com/Igor-J86/drag-n-drop/commit/e65294142d8faba751df14cdf7247c0b249749f6))
+
 ## [1.0.1](https://github.com/Igor-J86/drag-n-drop/compare/v1.0.0...v1.0.1) (2024-06-18)
 
 
