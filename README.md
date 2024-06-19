@@ -70,7 +70,11 @@ export default SomeComponent
 | language:string               | 'en'                |
 
 ## Language
-The component comes with support for English, Norwegian, Swedish and Danish language.
+The component comes with language support for:
+- English - `en`
+- Norwegian - `nb`
+- Swedish - `sv`
+- Danish - `da`
 
 ## Tech stack
 - 😱 React
