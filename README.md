@@ -69,6 +69,9 @@ export default SomeComponent
 | rootClassName:string          | 'ijrc-dragndrop'    |
 | language:string               | 'en'                |
 
+## Language
+The component comes with support for English, Norwegian, Swedish and Danish language.
+
 ## Tech stack
 - 😱 React
 - 🦺 TypeScript
