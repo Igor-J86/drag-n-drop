@@ -5,13 +5,25 @@
   --ijdnd-secondary: hsl(0, 0%, 85%);
   --ijdnd-secondary-light: hsl(0, 0%, 92%);
   --ijdnd-secondary-lighter: hsl(0, 0%, 95%);
-  --ijdnd-secondary-dark: hsl(0, 0%, 70%);
-  --ijdnd-light: hsl(0, 0%, 100%);
+  --ijdnd-light: hsl(0, 0%, 90%);
   --ijdnd-dark: hsl(0, 0%, 15%);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ijdnd-primary: hsl(155, 100%, 30%);
+    --ijdnd-primary-light: hsl(75, 60%, 60%);
+    --ijdnd-primary-dark: hsl(155, 100%, 25%);
+    --ijdnd-secondary: hsl(319, 85%, 38%);
+    --ijdnd-secondary-light: hsl(319, 85%, 48%);
+    --ijdnd-secondary-lighter: hsl(244, 40%, 15%);
+    --ijdnd-light: hsl(244, 40%, 25%);
+    --ijdnd-dark: hsl(0, 0%, 90%);
+  }
+}
+
 .ijdnd {
-  color: hsl(0, 0%, 20%);
+  color: var(--ijdnd-dark);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -23,13 +35,13 @@
     margin-bottom: 0;
   }
 
-  select,
-  input[type="text"] {
-    background-color: var(--ijdnd-white);
+  select {
+    background-color: var(--ijdnd-light);
     border-radius: 3px;
     border: 1px solid var(--ijdnd-secondary-dark);
-    padding: 0.25rem 0.5rem;
-    height: 2rem;
+    padding: 0.25rem 0.75rem;
+    height: 3rem;
+    color: var(--ijdnd-dark);
   }
 
   svg {
@@ -74,11 +86,6 @@
       position: absolute;
     }
   
-    .deact {
-      fill: hsl(0, 0%, 53.5%);
-      color: hsl(0, 0%, 40%);
-    }
-  
     .box-dim {
       opacity: 0.6;
       transition: all 0.2s ease-out;
@@ -91,8 +98,13 @@
       transition: background-color 0.2s ease-out;
       border: 2px dashed var(--ijdnd-primary);
     }
-  
-    }
+  }
+
+  .deact {
+    fill: hsl(0, 0%, 53.5%);
+    color: var(--ijdnd-dark);
+    min-height: 3rem;
+  }
 
   .reveal-slide svg {
     transition: 0.15s ease-out;
@@ -194,9 +206,9 @@
   }
   
   .bg-white {
-    background-color: var(--ijdnd-white);
+    background-color: var(--ijdnd-light);
   }
-  .bg2 {
+  .bg-gray2 {
     background-color: var(--ijdnd-secondary-lighter);
   }
   

@@ -34,7 +34,6 @@ const DeactivatedTiles: React.FC<Props> = ({
     <>
       <div className="maxw24r w100p">
         <h3>{t.hiddenTilesHeading}</h3>
-        <p>{t.hiddenTilesInfo}</p>
         <ul className="owlxs">
           {hiddenTiles.map(
             (tile) =>
@@ -54,7 +53,6 @@ const DeactivatedTiles: React.FC<Props> = ({
       {noAccessList.length > 0 && showNonAccessible ? (
         <div className="maxw20r w100p">
           <h3>{t.noAccessHeading}</h3>
-          <p>{t.noAccessInfo}</p>
           <ul className="owlxs">
             {noAccessList.map(
               (tile) =>

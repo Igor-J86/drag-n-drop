@@ -36,7 +36,7 @@ const data = {
 }
 
 root.render(
-  <DragNDrop>
+  <DragNDrop showNonAccessible>
     <div {...data.entry1}>
       {data.entry1.name}
     </div>
