@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/Igor-J86/drag-n-drop/compare/v1.0.2...v1.0.3) (2024-09-01)
+
+
+### Bug Fixes
+
+* add end line in css ([edf51f8](https://github.com/Igor-J86/drag-n-drop/commit/edf51f8faa2cc268eee6b1d857b07e30747786b2))
+
 ## [1.0.2](https://github.com/Igor-J86/drag-n-drop/compare/v1.0.1...v1.0.2) (2024-06-19)
 
 
