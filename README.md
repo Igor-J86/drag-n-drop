@@ -5,10 +5,14 @@ The component will consume the props you pass on the surrounding divs (or other 
 
 If you customize the visibility, sort order or columns, the information is being stored in local storage, and will be used by the component to render the children the same way next time you visit the same page.
 
+CSS note:
+The package comes with a CSS file, but you can choose to whether import it manually from the package or use your own.
+
 ## Usage
 ```jsx
 import React from "react";
 import { DragNDrop } from "@igor-j86/drag-n-drop";
+import "../../node_modules/@igor-j86/drag-n-drop/lib/style/ijdnd.css";
 
 const SomeComponent = () => {
   // Example data
