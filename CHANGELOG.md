@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Igor-J86/drag-n-drop/compare/v1.0.3...v1.1.0) (2024-09-01)
+
+
+### Features
+
+* inform about CSS change ([136b02a](https://github.com/Igor-J86/drag-n-drop/commit/136b02a4526fadc669ebf3f23a5b276c046088a5))
+
 ## [1.0.3](https://github.com/Igor-J86/drag-n-drop/compare/v1.0.2...v1.0.3) (2024-09-01)
 
 
