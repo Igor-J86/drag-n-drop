@@ -29,7 +29,7 @@ const data = {
     sortOrder: 3,
     name: "Entry 3 name",
     isAvailable: true,
-    hasAccess: false,
+    hasAccess: true,
     isDisplayed: true,
     columns: 2,
   },

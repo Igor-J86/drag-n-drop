@@ -1,5 +1,4 @@
 import * as React from "react";
-import '../style/ijdnd.css';
 import Tile from "./Tile";
 import DeactivatedTiles from "./DeactivatedTiles";
 import { translations } from "./translations";
