@@ -52,6 +52,14 @@
     fill: currentColor;
   }
 
+  &.config-left {
+    flex-direction: row-reverse;
+  }
+
+  &.config-right {
+    flex-direction: row;
+  }
+
   .ijdnd-area {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(calc(100% / 4 - 1rem), 1fr));
@@ -154,6 +162,14 @@
   .flex-wrap {
     flex-wrap: wrap;
   }
+
+  .flex-dir-row-rev {
+    flex-direction: row-reverse;
+  }
+
+  .flex-dir-col {
+    flex-direction: column;
+  }
   
   .gaxs {
     gap: 0.5rem;
@@ -245,7 +261,6 @@
   .maxw24r {
     max-width: 24rem;
   }
-
   .w100p {
     width: 100%;
   }

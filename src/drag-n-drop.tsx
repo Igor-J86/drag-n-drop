@@ -29,6 +29,8 @@ export interface DragNDropProps {
   rootClassName?: string;
   /** Language */
   language?: string;
+  /** Placement of the configuration area */
+  configurationArea?: "bottom" | "left" | "right";
 }
 
 type TileObj = {
@@ -43,7 +45,8 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
   children,
   showNonAccessible,
   rootClassName = "ijdnd-area",
-  language = "en"
+  language = "en",
+  configurationArea = "bottom"
 }) => {
   const [allTiles, setAllTiles] = React.useState<Array<any>>(children!);
   const [noAccessTo, setNoAccessTo] = React.useState<Array<any>>([]);
@@ -312,95 +315,101 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
   }, [layout, allTiles]);
 
   return (
-    <div className="ijdnd">
-      {configuringTiles &&
-        (allTiles.length > 0 ? (
-          <p className="flex gaxs align-ic text-note">
-            <Info size={18} />
-            {t.customizeInfo}
-          </p>
-        ) : (
-          <p>{t.allTilesHidden}</p>
-        ))}
-      {!isLoading && allTiles.length > 0 && (
-        <div
-          id={id}
-          className={rootClassName + `${configuringTiles ? " gaxs" : " gam"}`}
-          style={{
-            gridTemplateColumns: `repeat(auto-fill,minmax(calc(100% / ${layout} - 1rem), 1fr))`,
-          }}
-        >
-          {allTiles.map(
-            (tile: TileProps) =>
-              tile.isAvailable && (
-                <Tile
-                  key={tile.tileId}
-                  tile={tile}
-                  tileId={tile.tileId}
-                  name={tile.name}
-                  isConfiguring={configuringTiles}
-                  sortOrder={tile.sortOrder}
-                  counter={counter()}
-                  length={allTiles.length}
-                  isDragging={dragging}
-                  onChangeDisplay={handleDisplayChange}
-                  onChangeSortOrder={changeSortOrder}
-                  onDragStart={handleDragStart}
-                  onDragEnter={handleDragEnter}
-                  onDragLeave={handleDragLeave}
-                  onDragEnd={handleDragEnd}
-                  onSetColumns={handleSetColumns}
-                  columns={tile.columns ? tile.columns : 1}
-                  layoutColumns={layout}
-                  t={t}
-                />
-              ),
-          )}
-        </div>
-      )}
+    <div className={`ijdnd${configurationArea === "left" ? " config-left" : configurationArea === "right" ? " config-right" : ""}`}>
+      <div className="w100p">
+        {configuringTiles &&
+          (allTiles.length > 0 ? (
+            <p className="flex gaxs align-ic text-note">
+              <Info size={18} />
+              {t.customizeInfo}
+            </p>
+          ) : (
+            <p>{t.allTilesHidden}</p>
+          ))}
+        {!isLoading && allTiles.length > 0 && (
+          <div
+            id={id}
+            className={rootClassName + `${configuringTiles ? " gaxs" : " gam"}`}
+            style={{
+              gridTemplateColumns: `repeat(auto-fill,minmax(calc(100% / ${layout} - 1rem), 1fr))`,
+            }}
+          >
+            {allTiles.map(
+              (tile: TileProps) =>
+                tile.isAvailable && (
+                  <Tile
+                    key={tile.tileId}
+                    tile={tile}
+                    tileId={tile.tileId}
+                    name={tile.name}
+                    isConfiguring={configuringTiles}
+                    sortOrder={tile.sortOrder}
+                    counter={counter()}
+                    length={allTiles.length}
+                    isDragging={dragging}
+                    onChangeDisplay={handleDisplayChange}
+                    onChangeSortOrder={changeSortOrder}
+                    onDragStart={handleDragStart}
+                    onDragEnter={handleDragEnter}
+                    onDragLeave={handleDragLeave}
+                    onDragEnd={handleDragEnd}
+                    onSetColumns={handleSetColumns}
+                    columns={tile.columns ? tile.columns : 1}
+                    layoutColumns={layout}
+                    t={t}
+                  />
+                ),
+            )}
+          </div>
+        )}
+      </div>
 
       {/* Editing area with lists */}
-      {configuringTiles ? (
-        <>
-          <div className="bg-gray2 flex flex-wrap gal pam">
-            <DeactivatedTiles
-              hiddenTiles={hiddenTiles}
-              noAccessList={noAccessTo}
-              onChangeDisplay={handleDisplayChange}
-              showNonAccessible={showNonAccessible}
-              t={t}
-            />
-            <DefineLayout
-              handleSetLayout={handleSetLayout}
-              layout={layout}
-              language={language}
-            />
-          </div>
+      <div
+        className={`flex flex-dir-col gas${configurationArea === "left" || configurationArea === "right" ? " maxw24r" : ""}`}
+      >
+        {configuringTiles ? (
+          <>
+            <div className="bg-gray2 flex flex-wrap gal pam">
+              <DeactivatedTiles
+                hiddenTiles={hiddenTiles}
+                noAccessList={noAccessTo}
+                onChangeDisplay={handleDisplayChange}
+                showNonAccessible={showNonAccessible}
+                t={t}
+              />
+              <DefineLayout
+                handleSetLayout={handleSetLayout}
+                layout={layout}
+                language={language}
+              />
+            </div>
+            <button
+              aria-expanded="true"
+              aria-controls={id}
+              className="btn gaxs"
+              type="button"
+              onClick={() => setConfiguringTiles(!configuringTiles)}
+            >
+              <Cog />
+              {t.close}
+            </button>
+          </>
+        ) : (
           <button
-            aria-expanded="true"
+            aria-expanded="false"
             aria-controls={id}
-            className="btn gaxs"
+            className="btn reveal-slide"
             type="button"
             onClick={() => setConfiguringTiles(!configuringTiles)}
           >
             <Cog />
-            {t.close}
+            <span className="reveal-hover" tabIndex={-1}>
+              {t.configure}
+            </span>
           </button>
-        </>
-      ) : (
-        <button
-          aria-expanded="false"
-          aria-controls={id}
-          className="btn reveal-slide"
-          type="button"
-          onClick={() => setConfiguringTiles(!configuringTiles)}
-        >
-          <Cog />
-          <span className="reveal-hover" tabIndex={-1}>
-            {t.configure}
-          </span>
-        </button>
-      )}
+        )}
+      </div>
     </div>
   );
 };
