@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.0...v1.1.1) (2024-12-13)
+
+
+### Bug Fixes
+
+* add option to set configuring area placement ([bb0ef03](https://github.com/Igor-J86/drag-n-drop/commit/bb0ef03de90e3ff0751ec2e1c3e8efaaeb9a176f))
+
 # [1.1.0](https://github.com/Igor-J86/drag-n-drop/compare/v1.0.3...v1.1.0) (2024-09-01)
 
 
