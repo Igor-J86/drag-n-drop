@@ -21,8 +21,6 @@ export interface DragNDropProps {
   id?: string;
   /** Children elements */
   children?: any;
-  /** Is super user */
-  isSuperUser?: boolean;
   /** Show non-accessible elements */
   showNonAccessible?: boolean;
   /** Root class name */
@@ -85,7 +83,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     // }).then((res) => res.json())
 
     // Storing the tiles data in local storage
-    localStorage.setItem("mybr-tiles", JSON.stringify(tilesCollection));
+    localStorage.setItem("ijdnd-tiles", JSON.stringify(tilesCollection));
   };
 
   const arrangeTilesData = (tilesData: Array<TileProps>) => {
@@ -130,14 +128,14 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
   React.useEffect(() => {
     setIsLoading(true);
     // Get stored tiles data from local storage. Could also come from an API?
-    const localData = JSON.parse(localStorage.getItem("mybr-tiles")!);
+    const localData = JSON.parse(localStorage.getItem("ijdnd-tiles")!);
 
     if (localData && localData.length > 0) {
       let sortOrder: number;
       let isDisplayed: boolean;
       let columns: number;
 
-      const gridLayout = JSON.parse(localStorage.getItem("mybr-tiles-layout")!);
+      const gridLayout = JSON.parse(localStorage.getItem("ijdnd-tiles-layout")!);
       if (gridLayout) {
         setLayout(+gridLayout);
       }
@@ -303,7 +301,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
 
   const handleSetLayout = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLayout(+e.target.value);
-    localStorage.setItem("mybr-tiles-layout", JSON.stringify(e.target.value));
+    localStorage.setItem("ijdnd-tiles-layout", JSON.stringify(e.target.value));
   };
 
   // Update each tile that is stored where number of columns exceeds layout with the number of layout

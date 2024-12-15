@@ -70,8 +70,9 @@ export default SomeComponent
 | id:string                     | 'customizableTiles' |
 | children:any                  | ''                  |
 | showNonAccessible:boolean     | false               |
-| rootClassName:string          | 'ijdnd-area'    |
+| rootClassName:string          | 'ijdnd-area'        |
 | language:string               | 'en'                |
+| configurationArea:string      | 'bottom'            |
 
 ## Language
 The component comes with language support for:
