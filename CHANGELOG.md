@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.1...v1.1.2) (2024-12-15)
+
+
+### Bug Fixes
+
+* rename localStorage item and update readme ([a115456](https://github.com/Igor-J86/drag-n-drop/commit/a115456a1ef273431aa68dc8369bf43fd930830a))
+
 ## [1.1.1](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.0...v1.1.1) (2024-12-13)
 
 
