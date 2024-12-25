@@ -6,7 +6,7 @@ import DefineLayout from "./DefineLayout";
 import { Cog, Info } from "./icons";
 
 export type TileProps = {
-  tileId: string;
+  entranceId: string;
   name: string;
   sortOrder: number;
   isAvailable?: boolean;
@@ -37,7 +37,7 @@ export interface DragNDropProps {
 }
 
 type TileObj = {
-  tileId: string;
+  entranceId: string;
   sortOrder: number;
   displayed: boolean;
   columns: number;
@@ -73,7 +73,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     tiles.map((tile) => {
       if (isSuperUser && !tile.reqSpecificAccess || tile.hasAccess) {
         const tilesObj: TileObj = {
-          tileId: tile.tileId,
+          entranceId: tile.entranceId,
           sortOrder: tile.sortOrder,
           displayed: tile.isDisplayed!,
           columns: tile.columns,
@@ -161,7 +161,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
       // Update default tiles data with data from local storage
       const getTilesStatus = (tileId: string) => {
         configData.map((tile: TileObj) => {
-          if (tile.tileId === tileId) {
+          if (tile.entranceId === tileId) {
             sortOrder = tile.sortOrder;
             isDisplayed = tile.displayed;
             columns = tile.columns;
@@ -170,7 +170,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
       };
       const tilesData = [...allTiles];
       const updatedUserTiles: Array<TileProps> = tilesData.map((tile, i) => {
-        getTilesStatus(tile.props.tileId);
+        getTilesStatus(tile.props.entranceId);
         return {
           ...tile.props,
           sortOrder: sortOrder,
@@ -256,7 +256,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     const hiddenTilesArr: Array<TileProps> = [...hiddenTiles];
 
     const updateDisplayedState = tiles.map((tile: TileProps) => {
-      if (tile.tileId === tileId) {
+      if (tile.entranceId === tileId) {
         return { ...tile, columns: cols };
       }
       return tile;
@@ -326,7 +326,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
   React.useEffect(() => {
     const tiles: Array<TileProps> = [...allTiles];
     tiles.map((tile: TileProps) => {
-      tile.columns > layout && handleSetColumns(layout, tile.tileId);
+      tile.columns > layout && handleSetColumns(layout, tile.entranceId);
     });
   }, [layout, allTiles]);
 
@@ -354,9 +354,9 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
               (tile: TileProps) =>
                 tile.isAvailable && (
                   <Tile
-                    key={tile.tileId}
+                    key={tile.entranceId}
                     tile={tile}
-                    tileId={tile.tileId}
+                    tileId={tile.entranceId}
                     name={tile.name}
                     isConfiguring={configuringTiles}
                     sortOrder={tile.sortOrder}
