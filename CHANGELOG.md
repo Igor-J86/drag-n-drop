@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.3...v1.1.4) (2024-12-25)
+
+
+### Bug Fixes
+
+* rename tileId to entranceId ([8f0e6cd](https://github.com/Igor-J86/drag-n-drop/commit/8f0e6cd0e2210189d878805432cc13cf132274f1))
+
 ## [1.1.3](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.2...v1.1.3) (2024-12-25)
 
 
