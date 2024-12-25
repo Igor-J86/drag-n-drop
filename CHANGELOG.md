@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.5...v1.1.6) (2024-12-25)
+
+
+### Bug Fixes
+
+* console log data for testing ([7fed027](https://github.com/Igor-J86/drag-n-drop/commit/7fed027e7aa632e88d0822843d5a8f21dcb92431))
+
 ## [1.1.5](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.4...v1.1.5) (2024-12-25)
 
 
