@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.6...v1.1.7) (2024-12-25)
+
+
+### Bug Fixes
+
+* remove console log from fetch ([0aef192](https://github.com/Igor-J86/drag-n-drop/commit/0aef1927a4629ebcdca97b201f4d551457917da7))
+
 ## [1.1.6](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.5...v1.1.6) (2024-12-25)
 
 
