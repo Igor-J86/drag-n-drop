@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.7...v1.1.8) (2024-12-25)
+
+
+### Bug Fixes
+
+* add saveUserConfig in else statement ([a30ec0e](https://github.com/Igor-J86/drag-n-drop/commit/a30ec0ecb30295255836834ad4dd7bb5f30cfa79))
+
 ## [1.1.7](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.6...v1.1.7) (2024-12-25)
 
 
