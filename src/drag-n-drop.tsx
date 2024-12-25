@@ -143,6 +143,10 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     if(apiEndpoint) {
       configData = fetch(apiEndpoint)
       .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        return data
+      })
     } else {
       configData = JSON.parse(localStorage.getItem("ijdnd-tiles")!)
     }
