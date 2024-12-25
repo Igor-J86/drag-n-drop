@@ -17,6 +17,7 @@ type Props = {
   onChangeDisplay?: React.FC | Function;
   showNonAccessible: boolean;
   t: Translations;
+  isSuperUser: boolean;
 };
 
 const DeactivatedTiles: React.FC<Props> = ({
@@ -25,6 +26,7 @@ const DeactivatedTiles: React.FC<Props> = ({
   onChangeDisplay,
   showNonAccessible,
   t,
+  isSuperUser
 }) => {
   const handleDisplayChange = (displayState: boolean, sortOrder: number) => {
     return onChangeDisplay(displayState, sortOrder);
@@ -50,7 +52,7 @@ const DeactivatedTiles: React.FC<Props> = ({
         </ul>
       </div>
 
-      {noAccessList.length > 0 && showNonAccessible ? (
+      {!isSuperUser && noAccessList.length > 0 && showNonAccessible ? (
         <div className="maxw20r w100p">
           <h3>{t.noAccessHeading}</h3>
           <ul className="owlxs">

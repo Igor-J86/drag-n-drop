@@ -12,6 +12,7 @@ export type TileProps = {
   isAvailable?: boolean;
   hasAccess?: boolean;
   isDisplayed?: boolean;
+  reqSpecificAccess?: boolean;
   children: React.ReactElement;
   columns: number;
 };
@@ -27,8 +28,12 @@ export interface DragNDropProps {
   rootClassName?: string;
   /** Language */
   language?: string;
+  /** An API endpoint for storing config */
+  apiEndpoint?: string;
   /** Placement of the configuration area */
   configurationArea?: "bottom" | "left" | "right";
+  /** User type */
+  isSuperUser?: boolean;
 }
 
 type TileObj = {
@@ -44,7 +49,9 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
   showNonAccessible,
   rootClassName = "ijdnd-area",
   language = "en",
-  configurationArea = "bottom"
+  configurationArea = "bottom",
+  apiEndpoint,
+  isSuperUser
 }) => {
   const [allTiles, setAllTiles] = React.useState<Array<any>>(children!);
   const [noAccessTo, setNoAccessTo] = React.useState<Array<any>>([]);
@@ -64,7 +71,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     const tilesCollection: Array<TileObj> = [];
 
     tiles.map((tile) => {
-      if (tile.hasAccess) {
+      if (isSuperUser && !tile.reqSpecificAccess || tile.hasAccess) {
         const tilesObj: TileObj = {
           tileId: tile.tileId,
           sortOrder: tile.sortOrder,
@@ -76,14 +83,16 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     });
 
     // Possibility to post the tiles via an API
-    // fetch(apiEndpoint, {
-    //   method: "POST",
-    //   headers: { "Content-type": "application/json; charset=UTF-8" },
-    //   body: JSON.stringify(tilesArray),
-    // }).then((res) => res.json())
-
-    // Storing the tiles data in local storage
-    localStorage.setItem("ijdnd-tiles", JSON.stringify(tilesCollection));
+    if(apiEndpoint) {
+      fetch(apiEndpoint, {
+        method: "POST",
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+        body: JSON.stringify(tilesCollection),
+      }).then((res) => res.json())
+    } else {
+      // Storing the tiles data in local storage
+      localStorage.setItem("ijdnd-tiles", JSON.stringify(tilesCollection));
+    }
   };
 
   const arrangeTilesData = (tilesData: Array<TileProps>) => {
@@ -98,14 +107,16 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
 
     tiles.map((tile) => {
       if (
-        (tile.hasAccess)
+        (tile.reqSpecificAccess && tile.hasAccess) ||
+        (isSuperUser && !tile.reqSpecificAccess) ||
+        (!isSuperUser && !tile.reqSpecificAccess && tile.hasAccess)
       ) {
         if (tile.isDisplayed && tile.isAvailable) {
           accessible.push(tile);
         } else {
           hiddenTiles.push(tile);
         }
-      } else {
+      } else if(!tile.reqSpecificAccess) {
         notAccessible.push(tile);
       }
     });
@@ -127,10 +138,17 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
 
   React.useEffect(() => {
     setIsLoading(true);
-    // Get stored tiles data from local storage. Could also come from an API?
-    const localData = JSON.parse(localStorage.getItem("ijdnd-tiles")!);
+    // Get stored tiles data from local storage or an API
+    let configData = null
+    if(apiEndpoint) {
+      configData = fetch(apiEndpoint)
+      .then((res) => res.json())
+      .then((data) => (data))
+    } else {
+      configData = JSON.parse(localStorage.getItem("ijdnd-tiles")!)
+    }
 
-    if (localData && localData.length > 0) {
+    if (configData && configData.length > 0) {
       let sortOrder: number;
       let isDisplayed: boolean;
       let columns: number;
@@ -142,7 +160,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
 
       // Update default tiles data with data from local storage
       const getTilesStatus = (tileId: string) => {
-        localData.map((tile: TileObj) => {
+        configData.map((tile: TileObj) => {
           if (tile.tileId === tileId) {
             sortOrder = tile.sortOrder;
             isDisplayed = tile.displayed;
@@ -373,6 +391,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
                 hiddenTiles={hiddenTiles}
                 noAccessList={noAccessTo}
                 onChangeDisplay={handleDisplayChange}
+                isSuperUser={isSuperUser}
                 showNonAccessible={showNonAccessible}
                 t={t}
               />
