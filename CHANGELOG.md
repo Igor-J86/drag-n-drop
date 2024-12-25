@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.2...v1.1.3) (2024-12-25)
+
+
+### Bug Fixes
+
+* add API endpoint support ([d7195ed](https://github.com/Igor-J86/drag-n-drop/commit/d7195ed0c2e62d5f90bc3e95c41de164b7dbaad5))
+
 ## [1.1.2](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.1...v1.1.2) (2024-12-15)
 
 
