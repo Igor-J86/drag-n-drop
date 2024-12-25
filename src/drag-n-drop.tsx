@@ -192,6 +192,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
       });
       sortedTiles.sort((a, b) => a.sortOrder - b.sortOrder);
       arrangeTilesData(sortedTiles);
+      saveUserConfig(sortedTiles)
     }
   }, []);
 
