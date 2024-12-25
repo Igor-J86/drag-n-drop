@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.4...v1.1.5) (2024-12-25)
+
+
+### Bug Fixes
+
+* remove .then from fetch ([93ca47d](https://github.com/Igor-J86/drag-n-drop/commit/93ca47d09e46950998925651b2d2f4b42713ec9f))
+
 ## [1.1.4](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.3...v1.1.4) (2024-12-25)
 
 
