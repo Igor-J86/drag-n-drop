@@ -111,7 +111,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
         (isSuperUser && !tile.reqSpecificAccess) ||
         (!isSuperUser && !tile.reqSpecificAccess && tile.hasAccess)
       ) {
-        if (tile.isDisplayed && tile.isAvailable) {
+        if (tile.isDisplayed) {
           accessible.push(tile);
         } else {
           hiddenTiles.push(tile);
