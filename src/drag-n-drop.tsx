@@ -194,7 +194,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
       arrangeTilesData(sortedTiles);
       saveUserConfig(sortedTiles)
     }
-  }, [apiEndpoint]);
+  }, []);
 
   // Change sort order buttons
   const changeSortOrder = (sortOrder: number, direction: string) => {
