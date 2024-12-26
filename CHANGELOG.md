@@ -1,3 +1,10 @@
+## [1.1.9](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.8...v1.1.9) (2024-12-26)
+
+
+### Bug Fixes
+
+* remove isAvailable check ([b0f5045](https://github.com/Igor-J86/drag-n-drop/commit/b0f5045dbdb631040ffbd61daf5216d14b1daed0))
+
 ## [1.1.8](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.7...v1.1.8) (2024-12-25)
 
 
