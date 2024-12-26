@@ -21,7 +21,7 @@ export interface DragNDropProps {
   /** Container id */
   id?: string;
   /** Children elements */
-  children?: any;
+  children: any;
   /** Show non-accessible elements */
   showNonAccessible?: boolean;
   /** Root class name */
@@ -53,7 +53,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
   apiEndpoint,
   isSuperUser
 }) => {
-  const [allTiles, setAllTiles] = React.useState<Array<any>>(children!);
+  const [allTiles, setAllTiles] = React.useState<Array<any>>(children);
   const [noAccessTo, setNoAccessTo] = React.useState<Array<any>>([]);
   const [hiddenTiles, setHiddenTiles] = React.useState<Array<TileProps>>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
