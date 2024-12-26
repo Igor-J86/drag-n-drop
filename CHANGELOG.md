@@ -1,3 +1,10 @@
+## [1.1.13](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.12...v1.1.13) (2024-12-26)
+
+
+### Bug Fixes
+
+* remove passed apiEndpoint in useEffect ([8747ddc](https://github.com/Igor-J86/drag-n-drop/commit/8747ddc8c4308ff8c0cc45a1669e37ebc768a35d))
+
 ## [1.1.12](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.11...v1.1.12) (2024-12-26)
 
 
