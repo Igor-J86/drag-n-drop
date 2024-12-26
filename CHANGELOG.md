@@ -1,3 +1,10 @@
+## [1.1.11](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.10...v1.1.11) (2024-12-26)
+
+
+### Bug Fixes
+
+* update example component ids ([7baf050](https://github.com/Igor-J86/drag-n-drop/commit/7baf050f7bdf5ebb27ecf427e75136f862d25f9a))
+
 ## [1.1.10](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.9...v1.1.10) (2024-12-26)
 
 
