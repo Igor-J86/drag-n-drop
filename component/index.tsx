@@ -7,7 +7,7 @@ const root = createRoot(document.getElementById('ijdnd-root')!);
 // Example data
 const data = {
   entry1: {
-    tileId: 'entry1',
+    entranceId: 'entry1',
     sortOrder: 1,
     name: "Entry 1 name",
     isAvailable: true,
@@ -16,7 +16,7 @@ const data = {
     columns: 2,
   },
   entry2: {
-    tileId: 'entry2',
+    entranceId: 'entry2',
     sortOrder: 2,
     name: "Entry 2 name",
     isAvailable: true,
@@ -25,7 +25,7 @@ const data = {
     columns: 3,
   },
   entry3:{
-    tileId: 'entry3',
+    entranceId: 'entry3',
     sortOrder: 3,
     name: "Entry 3 name",
     isAvailable: true,
