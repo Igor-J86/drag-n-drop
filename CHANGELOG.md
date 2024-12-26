@@ -1,3 +1,10 @@
+## [1.1.10](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.9...v1.1.10) (2024-12-26)
+
+
+### Bug Fixes
+
+* make children required ([663f366](https://github.com/Igor-J86/drag-n-drop/commit/663f366ec5b742b4557a8096ec255a14bb187564))
+
 ## [1.1.9](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.8...v1.1.9) (2024-12-26)
 
 
