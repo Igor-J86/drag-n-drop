@@ -86,7 +86,7 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     if(apiEndpoint) {
       fetch(apiEndpoint, {
         method: "POST",
-        headers: { "Content-type": "application/json; charset=UTF-8" },
+        headers: { "Content-Type": "application/json; charset=UTF-8" },
         body: JSON.stringify(tilesCollection),
       }).then((res) => res.json())
     } else {
@@ -141,11 +141,10 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     // Get stored tiles data from local storage or an API
     let configData = null
     if(apiEndpoint) {
-      configData = fetch(apiEndpoint)
-      .then((res) => res.json())
-      .then((data) => {
-        return data
+      configData = fetch(apiEndpoint, {
+        headers: { "Content-Type": "application/json; charset=UTF-8" }
       })
+      .then((res) => res.json())
     } else {
       configData = JSON.parse(localStorage.getItem("ijdnd-tiles")!)
     }
