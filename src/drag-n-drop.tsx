@@ -138,62 +138,74 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
 
   React.useEffect(() => {
     setIsLoading(true);
-    // Get stored tiles data from local storage or an API
-    let configData = null
-    if(apiEndpoint) {
-      configData = fetch(apiEndpoint, {
-        headers: { "Content-Type": "application/json; charset=UTF-8" }
-      })
-      .then((res) => res.json())
-    } else {
-      configData = JSON.parse(localStorage.getItem("ijdnd-tiles")!)
-    }
-
-    if (configData && configData.length > 0) {
-      let sortOrder: number;
-      let isDisplayed: boolean;
-      let columns: number;
-
-      const gridLayout = JSON.parse(localStorage.getItem("ijdnd-tiles-layout")!);
-      if (gridLayout) {
-        setLayout(+gridLayout);
+    const fetchData = async () => {
+      // Get stored tiles data from local storage or an API
+      let configData = null
+      if(apiEndpoint) {
+        try {
+          const response = await fetch(apiEndpoint)
+          if(response.ok) {
+            configData = await response.json()
+          } else {
+            console.error("Faled to fetch data:", response.statusText)
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error)
+        }
+      } else {
+        const localData = localStorage.getItem("ijdnd-tiles")
+        if(localData) {
+          configData = JSON.parse(localData)
+        }
       }
 
-      // Update default tiles data with data from local storage
-      const getTilesStatus = (tileId: string) => {
-        configData.map((tile: TileObj) => {
-          if (tile.entranceId === tileId) {
-            sortOrder = tile.sortOrder;
-            isDisplayed = tile.displayed;
-            columns = tile.columns;
-          }
-        });
-      };
-      const tilesData = [...allTiles];
-      const updatedUserTiles: Array<TileProps> = tilesData.map((tile, i) => {
-        getTilesStatus(tile.props.entranceId);
-        return {
-          ...tile.props,
-          sortOrder: sortOrder,
-          isDisplayed: isDisplayed,
-          columns: columns,
-        };
-      });
+      if (configData && configData.length > 0) {
+        let sortOrder: number;
+        let isDisplayed: boolean;
+        let columns: number;
 
-      updatedUserTiles.sort((a, b) => a.sortOrder - b.sortOrder);
-      //Treat the fetched Tiles
-      arrangeTilesData(updatedUserTiles);
-    } else {
-      //Treat the default Tiles
-      const tilesData = [...allTiles];
-      const sortedTiles: Array<TileProps> = tilesData.map((tile) => {
-        return tile.props;
-      });
-      sortedTiles.sort((a, b) => a.sortOrder - b.sortOrder);
-      arrangeTilesData(sortedTiles);
-      saveUserConfig(sortedTiles)
+        const gridLayout = JSON.parse(localStorage.getItem("ijdnd-tiles-layout")!);
+        if (gridLayout) {
+          setLayout(+gridLayout);
+        }
+
+        // Update default tiles data with data from local storage
+        const getTilesStatus = (tileId: string) => {
+          configData.map((tile: TileObj) => {
+            if (tile.entranceId === tileId) {
+              sortOrder = tile.sortOrder;
+              isDisplayed = tile.displayed;
+              columns = tile.columns;
+            }
+          });
+        };
+        const tilesData = [...allTiles];
+        const updatedUserTiles: Array<TileProps> = tilesData.map((tile, i) => {
+          getTilesStatus(tile.props.entranceId);
+          return {
+            ...tile.props,
+            sortOrder: sortOrder,
+            isDisplayed: isDisplayed,
+            columns: columns,
+          };
+        });
+
+        updatedUserTiles.sort((a, b) => a.sortOrder - b.sortOrder);
+        //Treat the fetched Tiles
+        arrangeTilesData(updatedUserTiles);
+      } else {
+        //Treat the default Tiles
+        const tilesData = [...allTiles];
+        const sortedTiles: Array<TileProps> = tilesData.map((tile) => {
+          return tile.props;
+        });
+        sortedTiles.sort((a, b) => a.sortOrder - b.sortOrder);
+        arrangeTilesData(sortedTiles);
+        saveUserConfig(sortedTiles)
+      }
     }
-  }, []);
+    fetchData()
+  }, [apiEndpoint]);
 
   // Change sort order buttons
   const changeSortOrder = (sortOrder: number, direction: string) => {
