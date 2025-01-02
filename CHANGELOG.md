@@ -1,3 +1,10 @@
+## [1.1.15](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.14...v1.1.15) (2025-01-02)
+
+
+### Bug Fixes
+
+* refactor fetching of data ([83b041f](https://github.com/Igor-J86/drag-n-drop/commit/83b041f67c458c47530ab54dc73c489db25235c1))
+
 ## [1.1.14](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.13...v1.1.14) (2025-01-02)
 
 
