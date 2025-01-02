@@ -1,3 +1,10 @@
+## [1.1.14](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.13...v1.1.14) (2025-01-02)
+
+
+### Bug Fixes
+
+* add headers to fetch GET ([005e1d3](https://github.com/Igor-J86/drag-n-drop/commit/005e1d3d1c942b11bef86ec0ced8e8229541f62c))
+
 ## [1.1.13](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.12...v1.1.13) (2024-12-26)
 
 
