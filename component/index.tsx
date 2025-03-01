@@ -14,9 +14,9 @@ const defaultData = [
     hasAccess: true,
     isDisplayed: true,
     columns: 2,
-    children: <div className="pam" style={{ backgroundColor: 'hsla(0,0%,100%,10%)'}}>
+    children: <div className="pam" style={{ backgroundColor: 'hsla(0,0%,70%,10%)'}}>
       <h2>Some example content</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam temporibus repudiandae corrupti dolorum optio magnam culpa, neque obcaecati natus voluptates distinctio porro in dolor. Sunt eaque dicta aliquid qui mollitia?</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
     </div>
   },
   {
@@ -27,7 +27,7 @@ const defaultData = [
     hasAccess: true,
     isDisplayed: true,
     columns: 3,
-    children: <div className="pam" style={{ backgroundColor: 'hsla(0,0%,100%,10%)'}}>
+    children: <div className="pam" style={{ backgroundColor: 'hsla(0,0%,70%,10%)'}}>
       <h2>Some example content 2</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam temporibus repudiandae corrupti dolorum optio magnam culpa, neque obcaecati natus voluptates distinctio porro in dolor. Sunt eaque dicta aliquid qui mollitia?</p>
     </div>
@@ -40,7 +40,7 @@ const defaultData = [
     hasAccess: true,
     isDisplayed: true,
     columns: 2,
-    children: <div className="pam" style={{ backgroundColor: 'hsla(0,0%,100%,10%)'}}>
+    children: <div className="pam" style={{ backgroundColor: 'hsla(0,0%,70%,10%)'}}>
     <h2>Some example content 3</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam temporibus repudiandae corrupti dolorum optio magnam culpa, neque obcaecati natus voluptates distinctio porro in dolor. Sunt eaque dicta aliquid qui mollitia?</p>
   </div>

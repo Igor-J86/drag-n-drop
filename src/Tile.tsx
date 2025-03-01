@@ -3,27 +3,6 @@ import { ArrowLeft, ArrowRight, Cross } from "./icons";
 import { Translations } from "./translations";
 import { TileObj } from "./drag-n-drop";
 
-// type Props = {
-//   tile: TileProps;
-//   tileId: string;
-//   name: string;
-//   counter: number;
-//   length: number;
-//   sortOrder: number;
-//   isConfiguring: boolean;
-//   isDragging: boolean;
-//   onChangeSortOrder: Function;
-//   onChangeDisplay: Function;
-//   onDragStart: Function;
-//   onDragEnter: Function;
-//   onDragLeave: Function;
-//   onDragEnd: Function;
-//   onSetColumns: Function;
-//   columns: number;
-//   layoutColumns: number;
-//   t: Translations;
-// };
-
 type TileProps = {
   tile: TileObj;
   counter: number;
@@ -40,6 +19,7 @@ type TileProps = {
   columns: number;
   layoutColumns: number;
   t: Translations;
+  isGrid: boolean;
 };
 
 type LayoutColumns = {
@@ -81,6 +61,7 @@ const Tile: React.FC<TileProps> = ({
   columns,
   layoutColumns,
   t,
+  isGrid,
 }) => {
   const [gridColumns, setGridColumns] = React.useState<number>(columns);
 
@@ -171,22 +152,24 @@ const Tile: React.FC<TileProps> = ({
         )}
       </div>
       <div className={`flex gas absolute display-change${isDragging ? " pointev-none" : ""}`}>
-        <button
-          className="btn set-column"
-          onMouseLeave={() => setGridColumns(columns)}
-          onKeyUp={(e) => handleKeyUp(e)}
-          title={`${gridColumns} ${gridColumns > 1 ? t.columns : t.column}`}
-        >
-          {Array.from({ length: layoutColumns }, (_, i) => (
-            <GenerateLayoutColumnsGrid
-              key={i}
-              count={i}
-              columns={gridColumns}
-              setGridColumns={setGridColumns}
-              handleSetColumns={handleSetColumns}
-            />
-          ))}
-        </button>
+        {isGrid && 
+          <button
+            className="btn set-column"
+            onMouseLeave={() => setGridColumns(columns)}
+            onKeyUp={(e) => handleKeyUp(e)}
+            title={`${gridColumns} ${gridColumns > 1 ? t.columns : t.column}`}
+          >
+            {Array.from({ length: layoutColumns }, (_, i) => (
+              <GenerateLayoutColumnsGrid
+                key={i}
+                count={i}
+                columns={gridColumns}
+                setGridColumns={setGridColumns}
+                handleSetColumns={handleSetColumns}
+              />
+            ))}
+          </button>
+        }
         {!tile.showAlways && (
           <button
             className="btn"

@@ -46,6 +46,8 @@ export type TilesDnDProps = {
   saveInBrowser?: boolean;
   /** Placement of the configuration area */
   configurationArea?: "bottom" | "left" | "right";
+  /** Display tiles as grid, not flex */
+  isGrid?: boolean;
 };
 
 export const DragNDrop: React.FC<TilesDnDProps> = ({
@@ -59,6 +61,7 @@ export const DragNDrop: React.FC<TilesDnDProps> = ({
   language = "en",
   configurationArea = "bottom",
   saveInBrowser = true,
+  isGrid = true,
 }) => {
   const dragTile = React.useRef<TileObj>(null);
   const dragNode = React.useRef<HTMLElement>(null);
@@ -381,11 +384,11 @@ export const DragNDrop: React.FC<TilesDnDProps> = ({
             <div
               id={id}
               className={
-                rootClassName + `${configuringTiles ? " gaxs" : " gam"}`
+                rootClassName + `${configuringTiles ? " gaxs" : " gam"}${isGrid ? " grid" : " flex flex-wrap"}`
               }
-              style={{
+              style={isGrid ? {
                 gridTemplateColumns: `repeat(auto-fill,minmax(calc(100% / ${layout} - 1rem), 1fr))`,
-              }}
+              } : {}}
             >
               {allTiles.map(
                 (tile: TileObj) =>
@@ -407,6 +410,7 @@ export const DragNDrop: React.FC<TilesDnDProps> = ({
                       columns={tile.columns ? tile.columns : 1}
                       layoutColumns={layout}
                       t={t}
+                      isGrid={isGrid}
                     />
                   )
               )}
@@ -435,11 +439,13 @@ export const DragNDrop: React.FC<TilesDnDProps> = ({
                 t={t}
                 showNonAccessible={showDeactivated}
               />
-              <DefineLayout
-                handleSetLayout={handleSetLayout}
-                layout={layout}
-                language={language}
-              />
+              {isGrid &&
+                <DefineLayout
+                  handleSetLayout={handleSetLayout}
+                  layout={layout}
+                  language={language}
+                />
+              }
             </div>
             <button
               aria-expanded="true"
