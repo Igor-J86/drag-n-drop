@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.0...v2.0.1) (2025-03-01)
+
+
+### Bug Fixes
+
+* render name if no children + update readme ([ae11834](https://github.com/Igor-J86/drag-n-drop/commit/ae11834ee8ff2f4a027148f8cb7b7b656af0fc43))
+
 # [2.0.0](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.15...v2.0.0) (2025-03-01)
 
 
