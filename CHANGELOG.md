@@ -1,3 +1,10 @@
+## [2.0.4](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.3...v2.0.4) (2025-03-01)
+
+
+### Bug Fixes
+
+* adjust css ([6efd63d](https://github.com/Igor-J86/drag-n-drop/commit/6efd63d4c1308efdaf2bc34d97ab747d363c50e0))
+
 ## [2.0.3](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.2...v2.0.3) (2025-03-01)
 
 
