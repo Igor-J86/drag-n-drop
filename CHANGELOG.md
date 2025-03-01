@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.2...v2.0.3) (2025-03-01)
+
+
+### Bug Fixes
+
+* add isGrid conditional + adjust dark mode css ([a2872bc](https://github.com/Igor-J86/drag-n-drop/commit/a2872bccb82e304adba6631326276889f782617f))
+
 ## [2.0.2](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.1...v2.0.2) (2025-03-01)
 
 
