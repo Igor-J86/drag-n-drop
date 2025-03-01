@@ -5,46 +5,48 @@ import { DragNDrop } from "../src/drag-n-drop";
 const root = createRoot(document.getElementById('ijdnd-root')!);
 
 // Example data
-const data = {
-  entry1: {
-    entranceId: 'entry1',
+const defaultData = [
+  {
+    tileId: 'entry1',
     sortOrder: 1,
-    name: "Entry 1 name",
+    name: "Entry 1",
     isAvailable: true,
     hasAccess: true,
     isDisplayed: true,
     columns: 2,
+    children: <div className="pam" style={{ backgroundColor: 'hsla(0,0%,100%,10%)'}}>
+      <h2>Some example content</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam temporibus repudiandae corrupti dolorum optio magnam culpa, neque obcaecati natus voluptates distinctio porro in dolor. Sunt eaque dicta aliquid qui mollitia?</p>
+    </div>
   },
-  entry2: {
-    entranceId: 'entry2',
+  {
+    tileId: 'entry2',
     sortOrder: 2,
-    name: "Entry 2 name",
+    name: "Entry 2",
     isAvailable: true,
     hasAccess: true,
     isDisplayed: true,
     columns: 3,
+    children: <div className="pam" style={{ backgroundColor: 'hsla(0,0%,100%,10%)'}}>
+      <h2>Some example content 2</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam temporibus repudiandae corrupti dolorum optio magnam culpa, neque obcaecati natus voluptates distinctio porro in dolor. Sunt eaque dicta aliquid qui mollitia?</p>
+    </div>
   },
-  entry3:{
-    entranceId: 'entry3',
+  {
+    tileId: 'entry3',
     sortOrder: 3,
-    name: "Entry 3 name",
+    name: "Entry 3",
     isAvailable: true,
     hasAccess: true,
     isDisplayed: true,
     columns: 2,
+    children: <div className="pam" style={{ backgroundColor: 'hsla(0,0%,100%,10%)'}}>
+    <h2>Some example content 3</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam temporibus repudiandae corrupti dolorum optio magnam culpa, neque obcaecati natus voluptates distinctio porro in dolor. Sunt eaque dicta aliquid qui mollitia?</p>
+  </div>
   },
-}
+]
 
 root.render(
-  <DragNDrop showNonAccessible>
-    <div {...data.entry1}>
-      {data.entry1.name}
-    </div>
-    <div {...data.entry2}>
-      {data.entry2.name}
-    </div>
-    <div {...data.entry3}>
-      {data.entry3.name}
-    </div>
-  </DragNDrop>
+  <DragNDrop id="example1" resources={defaultData} />
 );

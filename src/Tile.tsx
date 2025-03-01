@@ -1,19 +1,37 @@
 import * as React from "react";
 import { ArrowLeft, ArrowRight, Cross } from "./icons";
 import { Translations } from "./translations";
-import { TileProps } from "./drag-n-drop";
+import { TileObj } from "./drag-n-drop";
 
-type Props = {
-  tile: TileProps;
-  tileId: string;
-  name: string;
+// type Props = {
+//   tile: TileProps;
+//   tileId: string;
+//   name: string;
+//   counter: number;
+//   length: number;
+//   sortOrder: number;
+//   isConfiguring: boolean;
+//   isDragging: boolean;
+//   onChangeSortOrder: Function;
+//   onChangeDisplay: Function;
+//   onDragStart: Function;
+//   onDragEnter: Function;
+//   onDragLeave: Function;
+//   onDragEnd: Function;
+//   onSetColumns: Function;
+//   columns: number;
+//   layoutColumns: number;
+//   t: Translations;
+// };
+
+type TileProps = {
+  tile: TileObj;
   counter: number;
   length: number;
-  sortOrder: number;
+  onChangeSortOrder?: Function;
   isConfiguring: boolean;
-  isDragging: boolean;
-  onChangeSortOrder: Function;
   onChangeDisplay: Function;
+  isDragging: boolean;
   onDragStart: Function;
   onDragEnter: Function;
   onDragLeave: Function;
@@ -47,13 +65,10 @@ const GenerateLayoutColumnsGrid: React.FC<LayoutColumns> = ({
   );
 };
 
-const Tile: React.FC<Props> = ({
+const Tile: React.FC<TileProps> = ({
   tile,
-  tileId,
-  name,
   counter,
   length,
-  sortOrder,
   isConfiguring,
   isDragging,
   onChangeSortOrder,
@@ -74,39 +89,39 @@ const Tile: React.FC<Props> = ({
   }, [columns]);
 
   const handleHideTile = () => {
-    onChangeDisplay(false, sortOrder);
+    return onChangeDisplay(false, tile.sortOrder);
   };
 
-  const moveLeft = (e: any) => {
-    onChangeSortOrder(e.target.dataset.sortOrder, "left");
+  const moveLeft = (e: React.MouseEvent<HTMLButtonElement>) => {
+    return onChangeSortOrder(e.currentTarget.dataset.sortOrder, "left");
   };
 
-  const moveRight = (e: any) => {
-    onChangeSortOrder(e.target.dataset.sortOrder, "right");
+  const moveRight = (e: React.MouseEvent<HTMLButtonElement>) => {
+    return onChangeSortOrder(e.currentTarget.dataset.sortOrder, "right");
   };
 
-  const handleDragStart = (e: React.DragEvent<Element>) => {
-    onDragStart(e, tile);
+  const handleDragStart = (e: React.DragEvent<HTMLElement>) => {
+    return onDragStart(e, tile);
   };
 
-  const handleDragEnter = (e: React.DragEvent<Element>) => {
-    onDragEnter(e, tile);
+  const handleDragEnter = (e: React.DragEvent<HTMLElement>) => {
+    return onDragEnter(e, tile);
   };
 
-  const handleDragLeave = (e: React.DragEvent<Element>) => {
-    onDragLeave(e);
+  const handleDragLeave = (e: React.DragEvent<HTMLElement>) => {
+    return onDragLeave(e);
   };
 
   const handleDragEnd = () => {
-    onDragEnd();
+    return onDragEnd();
   };
 
-  const handleDragOver = (e: React.DragEvent<Element>) => {
+  const handleDragOver = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
   };
 
   const handleSetColumns = () => {
-    onSetColumns(gridColumns, tileId);
+    onSetColumns(gridColumns, tile.tileId);
   };
 
   const handleKeyUp = (e: React.KeyboardEvent) => {
@@ -117,7 +132,7 @@ const Tile: React.FC<Props> = ({
       setGridColumns((prev) => prev + 1);
     }
     if (e.key === "Enter" || e.code === "Space") {
-      onSetColumns(gridColumns, tileId);
+      onSetColumns(gridColumns, tile.tileId);
     }
   };
 
@@ -125,11 +140,11 @@ const Tile: React.FC<Props> = ({
     <div
       className={`tile__config relative${isDragging ? " box-dim" : ""} grid${columns}`}
       draggable={isConfiguring}
-      onDragStart={(e: React.DragEvent) => handleDragStart(e)}
-      onDragEnter={(e: React.DragEvent) => handleDragEnter(e)}
+      onDragStart={handleDragStart}
+      onDragEnter={handleDragEnter}
       onDragEnd={handleDragEnd}
-      onDragLeave={(e: React.DragEvent) => handleDragLeave(e)}
-      onDragOver={(e: React.DragEvent) => handleDragOver(e)}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
     >
       <div
         className={`flex gaxs change-order-btns${isDragging ? " pointev-none" : ""}`}
@@ -137,9 +152,9 @@ const Tile: React.FC<Props> = ({
         {counter! > 1 && (
           <button
             className="btn"
-            data-sort-order={sortOrder}
+            data-sort-order={tile.sortOrder}
             onClick={moveLeft}
-            title={`${t.move} ${name} ${t.toLeft}`}
+            title={`${t.move} ${tile.name} ${t.toLeft}`}
           >
             <ArrowLeft />
           </button>
@@ -147,9 +162,9 @@ const Tile: React.FC<Props> = ({
         {counter! < length! && (
           <button
             className="btn"
-            data-sort-order={sortOrder}
+            data-sort-order={tile.sortOrder}
             onClick={(e) => moveRight(e)}
-            title={`${t.move} ${name} ${t.toRight}`}
+            title={`${t.move} ${tile.name} ${t.toRight}`}
           >
             <ArrowRight />
           </button>
@@ -175,7 +190,7 @@ const Tile: React.FC<Props> = ({
         <button
           className="btn"
           onClick={handleHideTile}
-          title={`${t.hide} ${name}`}
+          title={`${t.hide} ${tile.name}`}
         >
           <Cross />
         </button>

@@ -3,7 +3,7 @@ import DeactivatedTile from "./DeactivatedTile";
 import { Translations } from "./translations";
 
 type Tile = {
-  entranceId: string;
+  tileId: string;
   sortOrder?: number;
   name?: string;
   isAvailable?: boolean;
@@ -41,7 +41,7 @@ const DeactivatedTiles: React.FC<Props> = ({
             (tile) =>
               tile.isAvailable && (
                 <DeactivatedTile
-                  key={tile.entranceId}
+                  key={tile.tileId}
                   sortOrder={tile.sortOrder}
                   tileName={tile.name}
                   onChangeDisplay={handleDisplayChange}
@@ -60,7 +60,7 @@ const DeactivatedTiles: React.FC<Props> = ({
               (tile) =>
                 tile.isAvailable && (
                   <DeactivatedTile
-                    key={tile.entranceId}
+                    key={tile.tileId}
                     tileName={tile.name}
                     disabled={true}
                     t={t}

@@ -5,105 +5,83 @@ import { translations } from "./translations";
 import DefineLayout from "./DefineLayout";
 import { Cog, Info } from "./icons";
 
-export type TileProps = {
-  entranceId: string;
-  name: string;
+export type TileObj = {
+  tileId: string;
   sortOrder: number;
+  name: string;
+  isDisplayed: boolean;
   isAvailable?: boolean;
   hasAccess?: boolean;
-  isDisplayed?: boolean;
   reqSpecificAccess?: boolean;
-  children: React.ReactElement;
+  showAlways?: boolean;
+  children?: React.ReactNode;
   columns: number;
 };
 
-export interface DragNDropProps {
-  /** Container id */
-  id?: string;
-  /** Children elements */
-  children: any;
-  /** Show non-accessible elements */
-  showNonAccessible?: boolean;
-  /** Root class name */
-  rootClassName?: string;
-  /** Language */
-  language?: string;
-  /** An API endpoint for storing config */
-  apiEndpoint?: string;
-  /** Placement of the configuration area */
-  configurationArea?: "bottom" | "left" | "right";
-  /** User type */
-  isSuperUser?: boolean;
-}
-
-type TileObj = {
-  entranceId: string;
+type TileConfig = {
+  tileId: string;
   sortOrder: number;
   displayed: boolean;
   columns: number;
 };
 
-export const DragNDrop: React.FC<DragNDropProps> = ({
-  id = "customizableTiles",
-  children,
-  showNonAccessible,
+export type TilesDnDProps = {
+  /** A unique ID for the drag-n-drop */
+  id: string;
+  /** Type of user */
+  isSuperUser?: boolean;
+  /** Endpoint for GET/POST methods */
+  apiEndpoint?: string;
+  /** For controlling layout */
+  rootClassName?: string;
+  /** List of objects containing necessary data */
+  resources: TileObj[];
+  /** The language */
+  language?: string;
+  /** Show the non-accessible tiles area */
+  showDeactivated?: boolean;
+  /** A callback function that returns objects with stored data */
+  onEdit?: Function;
+  /** Save config in localStorage - only if no apiEndpoint is provided */
+  saveInBrowser?: boolean;
+  /** Placement of the configuration area */
+  configurationArea?: "bottom" | "left" | "right";
+};
+
+export const DragNDrop: React.FC<TilesDnDProps> = ({
+  id,
+  isSuperUser,
+  apiEndpoint,
+  resources,
   rootClassName = "ijdnd-area",
+  showDeactivated = true,
+  onEdit,
   language = "en",
   configurationArea = "bottom",
-  apiEndpoint,
-  isSuperUser
+  saveInBrowser = true,
 }) => {
-  const [allTiles, setAllTiles] = React.useState<Array<any>>(children);
-  const [noAccessTo, setNoAccessTo] = React.useState<Array<any>>([]);
-  const [hiddenTiles, setHiddenTiles] = React.useState<Array<TileProps>>([]);
+  const dragTile = React.useRef<TileObj>(null);
+  const dragNode = React.useRef<HTMLElement>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const dragTile: React.MutableRefObject<any> = React.useRef();
-  const dragNode: React.MutableRefObject<any> = React.useRef();
   const [configuringTiles, setConfiguringTiles] =
     React.useState<boolean>(false);
   const [dragging, setDragging] = React.useState<boolean>(false);
+  const [noAccessTo, setNoAccessTo] = React.useState<Array<TileObj>>([]);
+  const [hiddenTiles, setHiddenTiles] = React.useState<Array<TileObj>>([]);
+  const [allTiles, setAllTiles] = React.useState<Array<TileObj>>(resources);
   const [layout, setLayout] = React.useState<number>(4);
+  const t = translations[language] ?? translations["nb"];
 
-  const t = translations[language];
-
-  const saveUserConfig = (tiles: Array<TileProps>) => {
-    //Making the array with objects
-    const tilesCollection: Array<TileObj> = [];
-
-    tiles.map((tile) => {
-      if (isSuperUser && !tile.reqSpecificAccess || tile.hasAccess) {
-        const tilesObj: TileObj = {
-          entranceId: tile.entranceId,
-          sortOrder: tile.sortOrder,
-          displayed: tile.isDisplayed!,
-          columns: tile.columns,
-        };
-        tilesCollection.push(tilesObj);
-      }
-    });
-
-    // Possibility to post the tiles via an API
-    if(apiEndpoint) {
-      fetch(apiEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json; charset=UTF-8" },
-        body: JSON.stringify(tilesCollection),
-      }).then((res) => res.json())
-    } else {
-      // Storing the tiles data in local storage
-      localStorage.setItem("ijdnd-tiles", JSON.stringify(tilesCollection));
-    }
-  };
-
-  const arrangeTilesData = (tilesData: Array<TileProps>) => {
+  const arrangeTilesData = (tilesData: Array<TileObj>) => {
     // Push tiles with access to be displayed to one list,
-    // tiles with access to not be displayed to another,
+    // tiles with access to be hidden to another,
     // tiles without regular access to a third
-    // and leave out tiles that should not be available at all
+    // and leave out tiles that lack specific access (canaries, warehousing etc.)
+
     const tiles = [...tilesData];
-    let notAccessible: Array<TileProps> = [];
-    let accessible: Array<TileProps> = [];
-    let hiddenTiles: Array<TileProps> = [];
+    let notAccessible: Array<TileObj> = [];
+    let accessible: Array<TileObj> = [];
+    let hidden: Array<TileObj> = [];
 
     tiles.map((tile) => {
       if (
@@ -111,12 +89,12 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
         (isSuperUser && !tile.reqSpecificAccess) ||
         (!isSuperUser && !tile.reqSpecificAccess && tile.hasAccess)
       ) {
-        if (tile.isDisplayed) {
+        if (tile.isDisplayed || tile.showAlways === true) {
           accessible.push(tile);
         } else {
-          hiddenTiles.push(tile);
+          hidden.push(tile);
         }
-      } else if(!tile.reqSpecificAccess) {
+      } else if (!tile.reqSpecificAccess) {
         notAccessible.push(tile);
       }
     });
@@ -124,55 +102,90 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     setNoAccessTo(notAccessible);
 
     //Set sort order by index
-    const updateHiddenTiles = hiddenTiles.map((tile, index) => {
-      return { ...tile, sortOrder: index };
+    const updateHiddenTiles = hidden.map((ent: TileObj, index: number) => {
+      return { ...ent, sortOrder: index };
     });
     setHiddenTiles(updateHiddenTiles);
 
-    const updateDisplayedTiles = accessible.map((tile, index) => {
-      return { ...tile, sortOrder: index };
-    });
+    const updateDisplayedTiles = accessible.map(
+      (ent: TileObj, index: number) => {
+        return { ...ent, sortOrder: index };
+      }
+    );
     setAllTiles(updateDisplayedTiles);
     setIsLoading(false);
   };
 
+  const saveUserConfig = (tiles: Array<TileObj>) => {
+    //Making the array with objects
+    const tilesArray: Array<TileConfig> = [];
+
+    tiles.map((tile) => {
+      if ((isSuperUser && !tile.reqSpecificAccess) || tile.hasAccess) {
+        const tilesObj: TileConfig = {
+          tileId: tile.tileId,
+          sortOrder: tile.sortOrder,
+          displayed: tile.isDisplayed,
+          columns: tile.columns,
+        };
+        tilesArray.push(tilesObj);
+      }
+    });
+
+    // Save the config via an API endpoint, or in localStorage
+    if (apiEndpoint && apiEndpoint !== "") {
+      fetch(apiEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=UTF-8" },
+        body: JSON.stringify(tilesArray),
+      }).then((res) => res.json());
+    } else if (saveInBrowser) {
+      localStorage.setItem(`ijdnd-tiles-${id}`, JSON.stringify(tilesArray));
+    }
+    if (onEdit) {
+      return onEdit(tilesArray);
+    }
+  };
+
   React.useEffect(() => {
     setIsLoading(true);
+    // Get saved tiles config via an API or from localStorage
     const fetchData = async () => {
-      // Get stored tiles data from local storage or an API
-      let configData = null
-      if(apiEndpoint) {
+      let configData = null;
+      if (apiEndpoint) {
         try {
-          const response = await fetch(apiEndpoint)
-          if(response.ok) {
-            configData = await response.json()
+          const response = await fetch(apiEndpoint);
+          if (response.ok) {
+            configData = await response.json();
           } else {
-            console.error("Faled to fetch data:", response.statusText)
+            console.error("Failed to fetch data:", response.statusText);
           }
         } catch (error) {
-          console.error("Error fetching data:", error)
+          console.error("Error fetching data:", error);
         }
       } else {
-        const localData = localStorage.getItem("ijdnd-tiles")
-        if(localData) {
-          configData = JSON.parse(localData)
+        const localData = localStorage.getItem(`ijdnd-tiles-${id}`);
+        if (localData) {
+          configData = JSON.parse(localData);
         }
       }
 
+      // Sync default tiles config with loaded config
       if (configData && configData.length > 0) {
         let sortOrder: number;
         let isDisplayed: boolean;
         let columns: number;
 
-        const gridLayout = JSON.parse(localStorage.getItem("ijdnd-tiles-layout")!);
+        const gridLayout = JSON.parse(
+          localStorage.getItem("ijdnd-tiles-layout")!
+        );
         if (gridLayout) {
           setLayout(+gridLayout);
         }
 
-        // Update default tiles data with data from local storage
         const getTilesStatus = (tileId: string) => {
-          configData.map((tile: TileObj) => {
-            if (tile.entranceId === tileId) {
+          configData.map((tile: TileConfig) => {
+            if (tile.tileId === tileId) {
               sortOrder = tile.sortOrder;
               isDisplayed = tile.displayed;
               columns = tile.columns;
@@ -180,10 +193,10 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
           });
         };
         const tilesData = [...allTiles];
-        const updatedUserTiles: Array<TileProps> = tilesData.map((tile, i) => {
-          getTilesStatus(tile.props.entranceId);
+        const updatedUserTiles: Array<TileObj> = tilesData.map((tile) => {
+          getTilesStatus(tile.tileId);
           return {
-            ...tile.props,
+            ...tile,
             sortOrder: sortOrder,
             isDisplayed: isDisplayed,
             columns: columns,
@@ -191,95 +204,69 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
         });
 
         updatedUserTiles.sort((a, b) => a.sortOrder - b.sortOrder);
-        //Treat the fetched Tiles
+        //Treat the fetched tiles
         arrangeTilesData(updatedUserTiles);
       } else {
-        //Treat the default Tiles
+        //Treat the default tiles
         const tilesData = [...allTiles];
-        const sortedTiles: Array<TileProps> = tilesData.map((tile) => {
-          return tile.props;
-        });
-        sortedTiles.sort((a, b) => a.sortOrder - b.sortOrder);
+        const sortedTiles: Array<TileObj> = tilesData.sort(
+          (a, b) => a.sortOrder - b.sortOrder
+        );
         arrangeTilesData(sortedTiles);
-        saveUserConfig(sortedTiles)
+        // Storing the default config on first render (?)
+        //saveUserConfig(sortedTiles);
       }
-    }
-    fetchData()
+    };
+    fetchData();
   }, [apiEndpoint]);
 
-  // Change sort order buttons
   const changeSortOrder = (sortOrder: number, direction: string) => {
-    const tiles: Array<TileProps> = [...allTiles];
-    const fromIndex: number = tiles.indexOf(tiles[sortOrder]);
-    const obj: TileProps = tiles.splice(fromIndex, 1)[0];
-    const toIndex: number =
-      direction === "left" ? fromIndex - 1 : fromIndex + 1;
+    const tiles = [...allTiles];
+    const fromIndex = tiles.indexOf(tiles[sortOrder]);
+    const obj = tiles.splice(fromIndex, 1)[0];
+    const toIndex = direction === "left" ? fromIndex - 1 : fromIndex + 1;
 
     tiles.splice(toIndex, 0, obj);
     tiles[fromIndex] = { ...tiles[fromIndex], sortOrder: fromIndex };
     tiles[toIndex] = { ...tiles[toIndex], sortOrder: toIndex };
 
-    arrangeTilesData(tiles.concat(hiddenTiles).concat(noAccessTo));
-    saveUserConfig(tiles.concat(hiddenTiles));
+    setAllTiles(tiles);
+    saveUserConfig(tiles.concat(hiddenTiles).concat(noAccessTo));
 
     const btn = document.querySelector(
-      '[data-sort-order="' + toIndex + '"]',
+      '[data-sort-order="' + toIndex + '"]'
     ) as HTMLButtonElement;
     if (btn) {
       btn.focus();
     }
   };
 
-  // Hide/show tiles function
   const handleDisplayChange = (displayState: boolean, sortOrder: number) => {
-    const tiles: Array<TileProps> = [...allTiles];
-    const hiddenTilesArr: Array<TileProps> = [...hiddenTiles];
+    const tiles: Array<TileObj> = [...allTiles];
+    const hidden: Array<TileObj> = [...hiddenTiles];
 
-    let obj: TileProps;
+    let obj: TileObj;
 
     if (displayState === true) {
-      obj = hiddenTilesArr.splice(
-        hiddenTilesArr.indexOf(hiddenTilesArr[sortOrder]),
-        1,
-      )[0];
+      obj = hidden.splice(hidden.indexOf(hidden[sortOrder]), 1)[0];
       tiles.splice(tiles.length, 0, obj);
     } else {
       obj = tiles.splice(tiles.indexOf(tiles[sortOrder]), 1)[0];
-      hiddenTilesArr.splice(hiddenTilesArr.length, 0, obj);
+      hidden.splice(hidden.length, 0, obj);
     }
 
-    const updateDisplayedState = tiles.map((tile: TileProps, index: number) => {
-      return { ...tile, sortOrder: index, isDisplayed: true };
+    const updateDisplayedState = tiles.map((ent: TileObj, index: number) => {
+      return { ...ent, sortOrder: index, isDisplayed: true };
     });
 
-    const updateHiddenState = hiddenTilesArr.map(
-      (tile: TileProps, index: number) => {
-        return { ...tile, sortOrder: index, isDisplayed: false };
-      },
-    );
+    const updateHiddenState = hidden.map((ent: TileObj, index: number) => {
+      return { ...ent, sortOrder: index, isDisplayed: false };
+    });
 
     arrangeTilesData(
-      updateDisplayedState.concat(updateHiddenState).concat(noAccessTo),
+      updateDisplayedState.concat(updateHiddenState).concat(noAccessTo)
     );
     saveUserConfig(updateDisplayedState.concat(updateHiddenState));
-  };
-
-  // Set columns on tile
-  const handleSetColumns = (cols: number, tileId: string) => {
-    const tiles: Array<TileProps> = [...allTiles];
-    const hiddenTilesArr: Array<TileProps> = [...hiddenTiles];
-
-    const updateDisplayedState = tiles.map((tile: TileProps) => {
-      if (tile.entranceId === tileId) {
-        return { ...tile, columns: cols };
-      }
-      return tile;
-    });
-
-    arrangeTilesData(
-      updateDisplayedState.concat(hiddenTilesArr).concat(noAccessTo),
-    );
-    saveUserConfig(updateDisplayedState.concat(hiddenTilesArr));
   };
 
   let count = 0;
@@ -288,47 +275,72 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
     return (count = count + 1);
   };
 
-  const handleDragStart = (e: Event, params: TileProps) => {
+  const handleDragStart = (e: Event, params: TileObj) => {
     dragTile.current = params;
-    dragNode.current = e.target;
-    dragNode.current.classList.add("box-dragging");
+    if (e.target instanceof HTMLElement) {
+      dragNode.current = e.target;
+    } else {
+      console.error("Target is not an HTMLElement", e.target);
+    }
+    dragNode.current!.classList.add("box-dragging");
 
     setDragging(true);
   };
 
   const handleDragEnd = () => {
-    dragNode.current.classList.remove("box-dragging");
-    dragTile.current = null;
-    dragNode.current = null;
+    dragNode.current!.classList.remove("box-dragging");
+    dragTile.current = undefined;
+    dragNode.current = undefined;
 
-    arrangeTilesData(allTiles.concat(hiddenTiles).concat(noAccessTo));
-    saveUserConfig(allTiles.concat(hiddenTiles));
     setDragging(false);
+    saveUserConfig(allTiles.concat(hiddenTiles).concat(noAccessTo));
   };
 
-  const handleDragLeave = (e: any) => {
-    e.target.classList.remove("box-dragging");
+  const handleDragLeave = (e: React.DragEvent<HTMLElement>) => {
+    e.currentTarget.classList.remove("box-dragging");
   };
 
-  const handleDragEnter = (e: any, params: TileProps) => {
-    e.target.classList.add("box-dragging");
+  const handleDragEnter = (
+    e: React.DragEvent<HTMLElement>,
+    params: TileObj
+  ) => {
+    e.currentTarget.classList.add("box-dragging");
     if (e.target !== dragNode.current) {
       const currentTile = dragTile.current;
       const tiles = [...allTiles];
-      const movingTile = tiles.splice(currentTile.sortOrder, 1)[0];
+      const movingTile = tiles.splice(currentTile!.sortOrder, 1)[0];
       tiles.splice(params.sortOrder, 0, movingTile);
 
-      const updateOrderedState: Array<TileProps> = tiles.map(
-        (tile: TileProps, index: number) => {
-          return { ...tile, sortOrder: index };
-        },
-      );
+      const updateOrderedState = tiles.map((tile: TileObj, index: number) => {
+        return { ...tile, sortOrder: index };
+      });
       setAllTiles(updateOrderedState);
 
-      dragNode.current.classList.remove("box-dragging");
-      dragNode.current = e.target;
+      dragNode.current!.classList.remove("box-dragging");
+      dragNode.current = e.currentTarget;
       dragTile.current = params;
     }
+  };
+
+  const handleSetColumns = (cols: number, tileId: string) => {
+    const tiles: Array<TileObj> = [...allTiles];
+    const hiddenTilesArr: Array<TileObj> = [...hiddenTiles];
+
+    const updateDisplayedState = tiles.map((tile: TileObj) => {
+      if (tile.tileId === tileId) {
+        return { ...tile, columns: cols };
+      }
+      return tile;
+    });
+
+    arrangeTilesData(
+      updateDisplayedState.concat(hiddenTilesArr).concat(noAccessTo)
+    );
+    saveUserConfig(updateDisplayedState.concat(hiddenTilesArr));
+  };
+
+  const toggleTiles = () => {
+    setConfiguringTiles(!configuringTiles);
   };
 
   const handleSetLayout = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -338,14 +350,22 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
 
   // Update each tile that is stored where number of columns exceeds layout with the number of layout
   React.useEffect(() => {
-    const tiles: Array<TileProps> = [...allTiles];
-    tiles.map((tile: TileProps) => {
-      tile.columns > layout && handleSetColumns(layout, tile.entranceId);
+    const tiles: Array<TileObj> = [...allTiles];
+    tiles.map((tile: TileObj) => {
+      tile.columns > layout && handleSetColumns(layout, tile.tileId);
     });
   }, [layout, allTiles]);
 
   return (
-    <div className={`ijdnd${configurationArea === "left" ? " config-left" : configurationArea === "right" ? " config-right" : ""}`}>
+    <div
+      className={`ijdnd${
+        configurationArea === "left"
+          ? " config-left"
+          : configurationArea === "right"
+          ? " config-right"
+          : ""
+      }`}
+    >
       <div className="w100p">
         {configuringTiles &&
           (allTiles.length > 0 ? (
@@ -356,58 +376,64 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
           ) : (
             <p>{t.allTilesHidden}</p>
           ))}
-        {!isLoading && allTiles.length > 0 && (
-          <div
-            id={id}
-            className={rootClassName + `${configuringTiles ? " gaxs" : " gam"}`}
-            style={{
-              gridTemplateColumns: `repeat(auto-fill,minmax(calc(100% / ${layout} - 1rem), 1fr))`,
-            }}
-          >
-            {allTiles.map(
-              (tile: TileProps) =>
-                tile.isAvailable && (
-                  <Tile
-                    key={tile.entranceId}
-                    tile={tile}
-                    tileId={tile.entranceId}
-                    name={tile.name}
-                    isConfiguring={configuringTiles}
-                    sortOrder={tile.sortOrder}
-                    counter={counter()}
-                    length={allTiles.length}
-                    isDragging={dragging}
-                    onChangeDisplay={handleDisplayChange}
-                    onChangeSortOrder={changeSortOrder}
-                    onDragStart={handleDragStart}
-                    onDragEnter={handleDragEnter}
-                    onDragLeave={handleDragLeave}
-                    onDragEnd={handleDragEnd}
-                    onSetColumns={handleSetColumns}
-                    columns={tile.columns ? tile.columns : 1}
-                    layoutColumns={layout}
-                    t={t}
-                  />
-                ),
-            )}
-          </div>
-        )}
+        {!isLoading &&
+          (allTiles.length > 0 ? (
+            <div
+              id={id}
+              className={
+                rootClassName + `${configuringTiles ? " gaxs" : " gam"}`
+              }
+              style={{
+                gridTemplateColumns: `repeat(auto-fill,minmax(calc(100% / ${layout} - 1rem), 1fr))`,
+              }}
+            >
+              {allTiles.map(
+                (tile: TileObj) =>
+                  tile.isAvailable && (
+                    <Tile
+                      key={tile.tileId}
+                      tile={tile}
+                      isConfiguring={configuringTiles}
+                      counter={counter()}
+                      length={allTiles.length}
+                      isDragging={dragging}
+                      onChangeDisplay={handleDisplayChange}
+                      onChangeSortOrder={changeSortOrder}
+                      onDragStart={handleDragStart}
+                      onDragEnter={handleDragEnter}
+                      onDragLeave={handleDragLeave}
+                      onDragEnd={handleDragEnd}
+                      onSetColumns={handleSetColumns}
+                      columns={tile.columns ? tile.columns : 1}
+                      layoutColumns={layout}
+                      t={t}
+                    />
+                  )
+              )}
+            </div>
+          ) : (
+            <></>
+          ))}
       </div>
 
-      {/* Editing area with lists */}
       <div
-        className={`flex flex-dir-col gas${configurationArea === "left" || configurationArea === "right" ? " maxw24r" : ""}`}
+        className={`flex flex-dir-col gas${
+          configurationArea === "left" || configurationArea === "right"
+            ? " maxw24r"
+            : ""
+        }`}
       >
+        {/* Editing area with lists */}
         {configuringTiles ? (
           <>
             <div className="bg-gray2 flex flex-wrap gal pam">
               <DeactivatedTiles
                 hiddenTiles={hiddenTiles}
                 noAccessList={noAccessTo}
-                onChangeDisplay={handleDisplayChange}
                 isSuperUser={isSuperUser}
-                showNonAccessible={showNonAccessible}
+                onChangeDisplay={handleDisplayChange}
                 t={t}
+                showNonAccessible={showDeactivated}
               />
               <DefineLayout
                 handleSetLayout={handleSetLayout}
@@ -420,7 +446,9 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
               aria-controls={id}
               className="btn gaxs"
               type="button"
-              onClick={() => setConfiguringTiles(!configuringTiles)}
+              onClick={() => {
+                toggleTiles();
+              }}
             >
               <Cog />
               {t.close}
@@ -432,7 +460,9 @@ export const DragNDrop: React.FC<DragNDropProps> = ({
             aria-controls={id}
             className="btn reveal-slide"
             type="button"
-            onClick={() => setConfiguringTiles(!configuringTiles)}
+            onClick={() => {
+              toggleTiles();
+            }}
           >
             <Cog />
             <span className="reveal-hover" tabIndex={-1}>
