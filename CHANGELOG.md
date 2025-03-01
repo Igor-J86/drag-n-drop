@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.1...v2.0.2) (2025-03-01)
+
+
+### Bug Fixes
+
+* update to react 19 + adjust type defs ([f006af8](https://github.com/Igor-J86/drag-n-drop/commit/f006af864e7b0ea40710a51659b94f06a7d898ac))
+
 ## [2.0.1](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.0...v2.0.1) (2025-03-01)
 
 
