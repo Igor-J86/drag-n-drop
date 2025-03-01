@@ -28,14 +28,14 @@ type TileConfig = {
 export type TilesDnDProps = {
   /** A unique ID for the drag-n-drop */
   id: string;
+  /** List of objects containing necessary data */
+  resources: TileObj[];
   /** Type of user */
   isSuperUser?: boolean;
   /** Endpoint for GET/POST methods */
   apiEndpoint?: string;
   /** For controlling layout */
   rootClassName?: string;
-  /** List of objects containing necessary data */
-  resources: TileObj[];
   /** The language */
   language?: string;
   /** Show the non-accessible tiles area */

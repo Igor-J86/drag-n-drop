@@ -16,63 +16,60 @@ import "../../node_modules/@igor-j86/drag-n-drop/lib/style/ijdnd.css";
 
 const SomeComponent = () => {
   // Example data
-  const data = {
-    entry1: {
+  const defaultData = [
+    {
       tileId: 'entry1',
       sortOrder: 1,
-      name: "Entry 1 name",
-      isAvailable: true,
-      hasAccess: true,
-      isDisplayed: true,
-      columns: 1,
-    },
-    entry2: {
-      tileId: 'entry2',
-      sortOrder: 2,
-      name: "Entry 2 name",
-      isAvailable: true,
-      hasAccess: true,
-      isDisplayed: true,
-      columns: 3,
-    },
-    entry3:{
-      tileId: 'entry3',
-      sortOrder: 3,
-      name: "Entry 3 name",
+      name: "Entry 1",
       isAvailable: true,
       hasAccess: true,
       isDisplayed: true,
       columns: 2,
+      children: <>Some component</>
     },
-  }
+    {
+      tileId: 'entry2',
+      sortOrder: 2,
+      name: "Entry 2",
+      isAvailable: true,
+      hasAccess: true,
+      isDisplayed: true,
+      columns: 3,
+      children: <>Some component</>
+    },
+    {
+      tileId: 'entry3',
+      sortOrder: 3,
+      name: "Entry 3",
+      isAvailable: true,
+      hasAccess: true,
+      isDisplayed: true,
+      columns: 2,
+      children: <>Some component</>
+    },
+  ]
 
   return (
-    <DragNDrop>
-      <div {...data.entry1}>
-        {data.entry1.name}
-      </div>
-      <div {...data.entry2}>
-        {data.entry2.name}
-      </div>
-      <div {...data.entry3}>
-        {data.entry3.name}
-      </div>
-    </DragNDrop>
+    <DragNDrop id="example" resources={defaultData} />
   )
 }
 
 export default SomeComponent
 ```
 
-## Optional props
+## Props
 | Prop                          | Default             |
 | ----------------------------- | ------------------- |
-| id:string                     | 'customizableTiles' |
-| children:any                  | ''                  |
-| showNonAccessible:boolean     | false               |
-| rootClassName:string          | 'ijdnd-area'        |
-| language:string               | 'en'                |
-| configurationArea:string      | 'bottom'            |
+| id:string                     | ''                  |
+| resources:TileObj[]           |                     |
+| showDeactivated?:boolean      | true                |
+| rootClassName?:string         | 'ijdnd-area'        |
+| language?:string              | 'en'                |
+| configurationArea?:string     | 'bottom'            |
+| isSuperUser?: boolean         |                     |
+| apiEndpoint?: string          |                     |
+| onEdit?: Function             |                     |
+| saveInBrowser?: boolean       | true                |
 
 ## Language
 The component comes with language support for:

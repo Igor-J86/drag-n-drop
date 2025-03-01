@@ -187,18 +187,20 @@ const Tile: React.FC<TileProps> = ({
             />
           ))}
         </button>
-        <button
-          className="btn"
-          onClick={handleHideTile}
-          title={`${t.hide} ${tile.name}`}
-        >
-          <Cross />
-        </button>
+        {!tile.showAlways && (
+          <button
+            className="btn"
+            onClick={handleHideTile}
+            title={`${t.hide} ${tile.name}`}
+          >
+            <Cross />
+          </button>
+        )}
       </div>
-      <div className="pointev-none">{tile.children}</div>
+      <div className="pointev-none">{tile.children ? tile.children : tile.name}</div>
     </div>
   ) : (
-    <div className={`grid${columns}`}>{tile.children}</div>
+    <div className={`grid${columns}`}>{tile.children ? tile.children : tile.name}</div>
   );
 };
 export default Tile;
