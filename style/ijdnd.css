@@ -7,7 +7,7 @@
   --ijdnd-secondary-lighter: hsl(0, 0%, 95%);
   --ijdnd-secondary-dark: hsl(0, 0%, 70%);
   --ijdnd-light: hsl(0, 0%, 100%);
-  --ijdnd-dark: hsl(0, 0%, 20%);
+  --ijdnd-dark: hsl(0, 0%, 15%);
   --ijdnd-shadow: 0 2px 3px hsl(0,0%,80%);
 }
 
@@ -20,9 +20,9 @@
     --ijdnd-secondary-light: hsl(338, 87%, 45%);
     --ijdnd-secondary-lighter: hsl(230, 50%, 15%);
     --ijdnd-secondary-dark: hsl(338, 85%, 25%);
-    --ijdnd-light: hsl(244, 40%, 15%);
+    --ijdnd-light: hsl(230, 30%, 25%);
     --ijdnd-dark: hsl(0, 0%, 90%);
-    --ijdnd-shadow: 0 2px 4px hsl(0,0%,5%);
+    --ijdnd-shadow: 0 2px 3px hsl(0,0%,7%);
   }
 }
 
@@ -114,10 +114,9 @@
   }
 
   .deact {
-    fill: hsl(0, 0%, 53.5%);
+    opacity: 0.7;
     color: var(--ijdnd-dark);
     min-height: 3rem;
-    box-shadow: var(--ijdnd-shadow);
   }
 
   .reveal-slide svg {
@@ -233,6 +232,9 @@
   }
   .bg-gray2 {
     background-color: var(--ijdnd-secondary-lighter);
+  }
+  .bshadow {
+    box-shadow: var(--ijdnd-shadow);
   }
   
   .align-ic {
