@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.15...v2.0.0) (2025-03-01)
+
+
+### Code Refactoring
+
+* enable children in tile object instead ([6fd3a70](https://github.com/Igor-J86/drag-n-drop/commit/6fd3a705cd5cd05479ce3b5ae57e48e8f59df71d))
+
+
+### BREAKING CHANGES
+
+* use components directly as children in tile objects
+
 ## [1.1.15](https://github.com/Igor-J86/drag-n-drop/compare/v1.1.14...v1.1.15) (2025-01-02)
 
 
