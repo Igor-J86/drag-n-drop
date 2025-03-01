@@ -6,7 +6,7 @@ type Props = {
   tileName: string;
   disabled?: boolean;
   sortOrder?: number;
-  onChangeDisplay?: React.FC;
+  onChangeDisplay?: Function;
   t: Translations;
 };
 

@@ -1,20 +1,12 @@
 import * as React from "react";
 import DeactivatedTile from "./DeactivatedTile";
 import { Translations } from "./translations";
-
-type Tile = {
-  tileId: string;
-  sortOrder?: number;
-  name?: string;
-  isAvailable?: boolean;
-  hasAccess?: boolean;
-  isDisplayed?: boolean;
-};
+import { TileObj } from "./drag-n-drop";
 
 type Props = {
-  hiddenTiles: Array<Tile>;
-  noAccessList: Array<Tile>;
-  onChangeDisplay?: React.FC | Function;
+  hiddenTiles: Array<TileObj>;
+  noAccessList: Array<TileObj>;
+  onChangeDisplay?: Function;
   showNonAccessible: boolean;
   t: Translations;
   isSuperUser: boolean;
