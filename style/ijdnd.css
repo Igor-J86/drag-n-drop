@@ -300,7 +300,7 @@
 @media (max-width: 44rem) {
   .ijdnd {
     .ijdnd-area {
-      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)) !important;
+      grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)) !important;
     }
 
     .grid1,
