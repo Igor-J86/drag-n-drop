@@ -1,3 +1,10 @@
+## [2.0.5](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.4...v2.0.5) (2025-03-02)
+
+
+### Bug Fixes
+
+* adjust css for smaller screens ([fe407c4](https://github.com/Igor-J86/drag-n-drop/commit/fe407c4e06b1204f1dbc6ecef504e92dd4d0b0a2))
+
 ## [2.0.4](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.3...v2.0.4) (2025-03-01)
 
 
