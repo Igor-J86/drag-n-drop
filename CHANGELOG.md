@@ -1,3 +1,10 @@
+## [2.0.6](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.5...v2.0.6) (2025-03-08)
+
+
+### Bug Fixes
+
+* upgrade to react 19 ([237f3c7](https://github.com/Igor-J86/drag-n-drop/commit/237f3c7be8365af181dc676e9d9dfd7947d450e7))
+
 ## [2.0.5](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.4...v2.0.5) (2025-03-02)
 
 
