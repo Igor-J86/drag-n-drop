@@ -12,7 +12,7 @@ The package comes with a CSS file, but you can choose to whether import it manua
 ```jsx
 import React from "react";
 import { DragNDrop } from "@igor-j86/drag-n-drop";
-import "../../node_modules/@igor-j86/drag-n-drop/lib/style/ijdnd.css";
+import "@igor-j86/drag-n-drop/lib/style/ijdnd.css";
 
 const SomeComponent = () => {
   // Example data
