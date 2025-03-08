@@ -1,3 +1,10 @@
+## [2.0.7](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.6...v2.0.7) (2025-03-08)
+
+
+### Bug Fixes
+
+* make peer dep react 19 ([2a7024a](https://github.com/Igor-J86/drag-n-drop/commit/2a7024a8c7fda5cc709b9abc69ede3fbd186aaba))
+
 ## [2.0.6](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.5...v2.0.6) (2025-03-08)
 
 
