@@ -1,3 +1,10 @@
+## [2.0.8](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.7...v2.0.8) (2025-03-09)
+
+
+### Bug Fixes
+
+* set peerDeps min versions allowed ([ad987e9](https://github.com/Igor-J86/drag-n-drop/commit/ad987e9588592522abc466f5ad68fdeb3cf0793a))
+
 ## [2.0.7](https://github.com/Igor-J86/drag-n-drop/compare/v2.0.6...v2.0.7) (2025-03-08)
 
 
