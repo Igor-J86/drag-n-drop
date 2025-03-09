@@ -38,8 +38,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
